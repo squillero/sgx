@@ -8,7 +8,16 @@ The Selfish Gene optimization algorithm
 
 The *Selfish Gene* optimization algorithm (SG) is a population-less evolutionary algorithm loosely inspired by the interpretation of the Darwinian theory given by the English biologist Richard Dawkins and popularized as the *Selfish Gene theory*. It enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](history.md)
 
+To celebrate its 20th anniversary, the Extended Selfish Gene (SGX) is a brand new implementation of the idea, rewritten from scratch in Python 3, with improved usability and several new features, and eventually including real-valued parameters.
+
 #### :warning: SGX is currently under active development: This repo is only useful if you want to hack into the code.
+
+### Notes
+
+* The default branch is always the more stable
+* Do not clone experimental branches `exp/*` unless you know what you are doing
+* Follow the [style guide](https://github.com/squillero/style/blob/master/python.md)
+* It may be wise to contact Giovanni before digging in
 
 ### Licence
 
