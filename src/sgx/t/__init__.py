@@ -27,16 +27,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sgx
-
-def cmp(ind1, ind2):
-    return sum(ind1) > sum(ind2)
-
-genome = [sgx.allele.Boolean() for _ in range(5)]
-p = sgx.Population(genome, compare_function=cmp)
-i1, i2 = p.sample(.001), p.sample(.001)
-sgx.logging.debug(f"{i1} > {i2}: {p._compare_function(i1, i2)}")
-
-x = sgx.fitness.Simple(7.1)
-y = sgx.fitness.Simple(7)
-sgx.logging.debug(f"{x > y}, {x < y}, {x == y}")
+from ..fitness.base import Fitness
+from ..allele.base import Allele
+from ..base import Genome, Genotype

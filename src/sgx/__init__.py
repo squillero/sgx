@@ -27,26 +27,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""The Extended Selfish Gene optimization library (SGX)
-
-A quick 'n dirty versatile population-less evolutionary optimizer loosely
-inspired by a cool interpretation of the Darwinian theory.
-
-Copyright © 2019 Giovanni Squillero and Alberto Tonda
-The SGX is licensed under the Apache License, Version 2.0.
-For more information see <https://github.com/squillero/sgx>
+"""THE E(X)TENDED (S)ELFISH (G)ENE ALGORITHM
+A quick 'n dirty versatile population-less evolutionary optimizer loosely inspired
+by a cool interpretation of the Darwinian theory.
+Copyright © 2020 Giovanni Squillero. Licensed under Apache-2.0.
 """
 
 import sys
 import warnings
 
 from .utils import logging
+
 from . import allele
 from . import fitness
-from .population import Population
+from . import algorithms
+from . import t
+
+from .base import *
+from .species import Species
 
 if sys.flags.optimize == 0:
-    warnings.warn("Debug checks are active, performances are SIGNIFICANTLY impaired.", RuntimeWarning, stacklevel=2)
+    warnings.warn("All debug checks are active, performances are significantly impaired.", RuntimeWarning, stacklevel=2)
 
 if sys.version_info < (3,):
     warnings.warn("The code is probably not compatible with Python v2", Warning, stacklevel=2)

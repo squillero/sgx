@@ -27,4 +27,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+__all__ = ['sg']
+
+
 from ..utils import logging
+from .. import species
+
+def sg(species: species.Species):
+    logging.warning("Hey!")
+
+
+def sg2():
+    pass

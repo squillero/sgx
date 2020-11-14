@@ -27,29 +27,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
-from abc import ABC, abstractmethod
-from ..utils import logging
+import sgx
 
 
-class Fitness(ABC):
+genome = sgx.Genome([sgx.allele.Boolean() for _ in range(5)])
+species = sgx.Species(genome,
+                      fitness_function=lambda i: sum(i))
 
-    @abstractmethod
-    def __gt__(self, other: 'Fitness') -> bool:
-        pass
-
-    def __ne__(self, other: 'Fitness') -> bool:
-        return not self == other
-
-    def __ge__(self, other: 'Fitness') -> bool:
-        return self > other or self == other
-
-    def __lt__(self, other: 'Fitness') -> bool:
-        return not (self > other or self == other)
-
-    def __le__(self, other: 'Fitness') -> bool:
-        return not self > other
-
-    # @abstractmethod
-    # def _is_dominated(self, other: Type['Fitness']) -> bool:
-    #    pass
+sgx.algorithms.sg(species)

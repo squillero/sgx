@@ -28,42 +28,22 @@
 # limitations under the License.
 
 from typing import Any
-from .abc import Allele
+from abc import ABC, abstractmethod
+from ..base import Genome
 from ..utils import logging
-from ..utils.random import SGxRandom
 
 
-class Boolean(Allele):
-    DEFAULT_SCALE = .001
-
-    def __init__(self, scale: float = DEFAULT_SCALE):
-        assert 0 <= scale < 1, "Illegal scale"
-        self._loc = .5
-        self._scale = scale
+class Allele(ABC):
 
     @property
-    def loc(self) -> float:
-        return self._loc
+    @abstractmethod
+    def mode(self) -> Any:
+        pass
 
-    @property
-    def scale(self) -> float:
-        return self._scale
+    @abstractmethod
+    def sample(self, mutation_rate: float) -> Genome:
+        pass
 
-    @property
-    def mode(self) -> bool:
-        return self._loc < .5
-
-    def sample(self, mutation_rate: float) -> bool:
-        if SGxRandom.random() < mutation_rate:
-            return SGxRandom.choice([True, False])
-        else:
-            return SGxRandom.random() < self.loc
-
-    def update(self, winner: bool, loser: bool) -> None:
-        if winner is True and loser is False:
-            self._loc += self._scale
-        elif winner is False and loser is True:
-            self._loc -= self._scale
-
-        self._loc = max(0, self._loc)
-        self._loc = min(1, self._loc)
+    @abstractmethod
+    def update(self, winner: Genome, loser: Genome) -> None:
+        pass

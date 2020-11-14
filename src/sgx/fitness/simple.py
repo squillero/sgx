@@ -30,21 +30,13 @@
 from abc import ABC, abstractmethod
 from math import isclose
 from ..utils import logging
-from .abc import Fitness
+from .base import Fitness
 
 
-class Simple(float, Fitness):
+class Scalar(Fitness, float):
+    """A single numeric value, larger is better"""
+    pass
 
-    def __gt__(self, other: float) -> bool:
-        """
-        Compares two individuals.
-        :return: True if the first one is greater than the second one.
-        """
-        return not isclose(self, other) and float(self) > float(other)
-
-    def __eq__(self, other: float) -> bool:
-        """
-        Compares two individuals.
-        :return: True if their values are almost equal.
-        """
-        return isclose(self, other)
+class Vector(Fitness, tuple):
+    """A single numeric value, smaller is better"""
+    pass
