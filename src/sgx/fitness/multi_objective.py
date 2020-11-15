@@ -28,18 +28,18 @@
 # limitations under the License.
 
 from ..utils import logging
+from ..utils.random import SGxRandom
 
 from abc import ABC, abstractmethod
-from random import shuffle
 from .simple import Vector
 
 
-class MultiObjective(Vector, ABC):
+class MultiObjective(Vector):
     """Abstract class for handling Molti-Objective problems"""
 
     @abstractmethod
     def is_fitter(self, other: 'Lexicase') -> bool:
-        pass
+        raise NotImplementedError
 
     def is_dominant(self, other: 'Lexicase') -> bool:
         self.check_comparable(other)
@@ -52,7 +52,5 @@ class Lexicase(MultiObjective):
 
     def is_fitter(self, other: 'Lexicase') -> bool:
         self.check_comparable(other)
-        order = list(range(len(self._values)))
-        shuffle(order)
-        logging.debug(f"{[self._values[i] for i in order]} vs. {[other._values[i] for i in order]}")
+        order = SGxRandom.shuffled(range(len(self._values)))
         return Vector.compare_vectors([self._values[i] for i in order], [other._values[i] for i in order]) > 0

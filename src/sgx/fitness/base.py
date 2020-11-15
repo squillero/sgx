@@ -30,7 +30,6 @@
 from ..utils import logging
 
 from typing import final, Any
-from abc import abstractmethod
 import warnings
 from ..base import Pedantic, Paranoid
 

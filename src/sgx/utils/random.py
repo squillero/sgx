@@ -37,16 +37,13 @@ class Random:
         self._random = random.Random()
 
     def random(self) -> float:
-        """
-        Returns a random float number.
-        """
         return self._random.random()
 
     def choice(self, seq: Sequence[Any]) -> Any:
-        """
-        Returns a random sequence.
-        """
         return self._random.choice(seq)
+
+    def shuffled(self, seq: Sequence[Any]) -> Sequence[Any]:
+        return self._random.sample(seq, len(seq))
 
 
 SGxRandom = Random()

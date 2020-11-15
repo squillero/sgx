@@ -40,3 +40,5 @@ print(">>\t", f1 >> f2)
 
 for _ in range (10):
     print(">\t", f1 > f2)
+
+f1 = sgx.fitness.Lexicase2([10,  2, 30,  4, 50,  6], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
