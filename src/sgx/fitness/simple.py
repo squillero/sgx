@@ -27,29 +27,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..utils import logging
-
 from typing import Sequence, Any, Type
 from math import isclose
+
+from ..utils import logging
 from numbers import Number
 from .base import Fitness
 
 
 class Scalar(Fitness, float):
-    """A single numeric value -- Larger is better"""
+    """A single numeric value -- Larger is better."""
     pass
 
 
 class Integer(Fitness, int):
-    """A single numeric value -- Larger is better"""
+    """A single numeric value -- Larger is better."""
     pass
 
 
 class Approximate(Fitness, float):
-    """A single, floating-point value with approximate equality -- Larger is better"""
+    """A single, floating-point value with approximate equality -- Larger is better."""
 
     def __init__(self, argument, rel_tol: float = 1e-09, abs_tol: float = 0):
-        """See the documentation of math.isclose() and PEP485"""
+        """See the documentation of math.isclose() and PEP485."""
         super(Approximate, self).__init__()
         self._rel_tol = rel_tol
         self._abs_tol = abs_tol
@@ -67,15 +67,15 @@ class Approximate(Fitness, float):
 
     def check_comparable(self, other: 'Approximate'):
         super().check_comparable(other)
-        assert self._abs_tol == other._abs_tol, f"Can't compare Fitness Floats with different absolute tolerance ({float(self)}±{self._abs_tol} vs. {float(other)}±{other._abs_tol})"
-        assert self._rel_tol == other._rel_tol, f"Can't compare Fitness Floats with different relative tolerance ({float(self)}±{self._rel_tol}r vs. {float(other)}±{other._rel_tol}r)"
+        assert self._abs_tol == other._abs_tol, f"Can't is_fitter Fitness Floats with different absolute tolerance ({float(self)}±{self._abs_tol} vs. {float(other)}±{other._abs_tol})"
+        assert self._rel_tol == other._rel_tol, f"Can't is_fitter Fitness Floats with different relative tolerance ({float(self)}±{self._rel_tol}r vs. {float(other)}±{other._rel_tol}r)"
 
 
 # VECTORS
 
 
 class Vector(Fitness):
-    """A generic vector of Fitness values
+    """A generic vector of Fitness values.
 
     fitness_type is the subtype, **kwargs are passed to fitness init
 
@@ -102,7 +102,7 @@ class Vector(Fitness):
 
     @staticmethod
     def compare_vectors(v1: Sequence[Fitness], v2: Sequence[Fitness]) -> int:
-        """Compare Fitness values in v1 and v2
+        """Compare Fitness values in v1 and v2.
 
         Return -1 if v1 < v2; +1 if v1 > v2; 0 if v1 == v2"""
         for e1, e2 in zip(v1, v2):
@@ -118,4 +118,4 @@ class Vector(Fitness):
     def check_comparable(self, other: 'Vector'):
         super().check_comparable(other)
         assert len(self._values) == len(
-            other._values), f"Can't compare Fitness Vectors of different size ({self} vs. {other})"
+            other._values), f"Can't is_fitter Fitness Vectors of different size ({self} vs. {other})"

@@ -28,3 +28,8 @@
 # limitations under the License.
 
 from ..utils import logging
+from .base import Paranoid
+from . import fitness
+
+
+class Archive(set, Paranoid):

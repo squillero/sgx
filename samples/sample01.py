@@ -29,16 +29,7 @@
 
 import sgx
 
+genome = sgx.Genome([sgx.allele.Categorical("01-") for _ in range(20)])
+species = sgx.Species(genome=genome, fitness_function=lambda i: i.count('1'))
 
-f1 = sgx.fitness.Lexicase([10,  2, 30,  4, 50,  6], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
-f2 = sgx.fitness.Lexicase([ 1, 20,  3, 40,  5, 60], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
-
-print(f"{f1} vs. {f2}")
-print("==\t", f1 == f2)
-print("!=\t", f1 != f2)
-print(">>\t", f1 >> f2)
-
-for _ in range (10):
-    print(">\t", f1 > f2)
-
-f1 = sgx.fitness.Lexicase2([10,  2, 30,  4, 50,  6], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
+sgx.algorithms.sg(species, format_function=lambda x: str.join('', x))

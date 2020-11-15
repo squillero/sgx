@@ -27,15 +27,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC, abstractmethod
+
 from ..utils import logging
 from ..utils.random import SGxRandom
-
-from abc import ABC, abstractmethod
 from .simple import Vector
 
 
-class MultiObjective(Vector):
-    """Abstract class for handling Molti-Objective problems"""
+class MultiObjective(Vector, ABC):
+    """Abstract class for handling Molti-Objective problems."""
 
     @abstractmethod
     def is_fitter(self, other: 'Lexicase') -> bool:
@@ -48,7 +48,7 @@ class MultiObjective(Vector):
 
 
 class Lexicase(MultiObjective):
-    """Pseudo-MO through Lexicase selection (DOI:10.1109/TEVC.2014.2362729)"""
+    """Pseudo-MO through Lexicase selection (DOI:10.1109/TEVC.2014.2362729)."""
 
     def is_fitter(self, other: 'Lexicase') -> bool:
         self.check_comparable(other)

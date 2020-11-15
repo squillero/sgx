@@ -27,4 +27,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .categorical import Boolean
+from .categorical import Categorical

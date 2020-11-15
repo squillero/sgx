@@ -29,17 +29,16 @@
 
 __all__ = ['Genome', 'Genotype', 'Pedantic', 'Paranoid']
 
-from typing import Any, Sequence
+from typing import Any, Sequence, Tuple, Hashable, Callable
 from abc import ABC, abstractmethod
 from .allele import base
 
 
-class Paranoid(ABC):
+class Paranoid():
     """Abstract class: Paranoid classes do implement `run_paranoia_checks()`."""
 
-    @abstractmethod
     def run_paranoia_checks(self) -> bool:
-        """Checks the internal consistency of a "paranoid" object.
+        """Check the internal consistency of a "paranoid" object.
 
         The function should be overridden by the sub-classes to implement the
         required, specific checks. It always returns `True`, but throws an
@@ -64,9 +63,9 @@ class Pedantic(ABC):
 
     @abstractmethod
     def is_valid(self, obj: Any) -> bool:
-        """Checks an object against a specification. The function may be used
-        to check a value against a parameter definition, a node against a
-        section definition).
+        """Check an object against a specification.
+
+        The function may be used to check a value against a parameter definition, a node against a section definition).
 
         Returns:
             True if the object is valid, False otherwise
@@ -75,10 +74,10 @@ class Pedantic(ABC):
 
 
 class Genotype(tuple, Paranoid):
-    """A tuple containing the organism’s actual genes (their values)"""
+    """A tuple containing the organism’s actual genes (their values)."""
 
-    def __init__(self, *args: Any):
-        list.__init__(self, *args)
+    def __init__(self, *args):
+        super().__init__()
         assert self.run_paranoia_checks()
 
     def run_paranoia_checks(self) -> bool:
@@ -86,10 +85,10 @@ class Genotype(tuple, Paranoid):
 
 
 class Genome(tuple, Pedantic, Paranoid):
-    """A tuple of Alleles, each one specifying a set of alternative genes"""
+    """A tuple of Alleles, each one specifying a set of alternative genes."""
 
-    def __init__(self, *args: Any):
-        list.__init__(list(*args))
+    def __init__(self, *args):
+        super().__init__()
         assert self.run_paranoia_checks()
 
     def run_paranoia_checks(self) -> bool:
@@ -98,4 +97,6 @@ class Genome(tuple, Pedantic, Paranoid):
         return super().run_paranoia_checks()
 
     def is_valid(self, genotype: Genotype) -> bool:
+        if any(not a.is_valid(g) for a, g in zip(list(self), genotype)):
+            return False
         return super().is_valid(genotype)

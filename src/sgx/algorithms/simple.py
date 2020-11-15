@@ -29,13 +29,28 @@
 
 __all__ = ['sg']
 
+from typing import Optional, Callable
+
 from ..utils import logging
 from .. import species
 
 
-def sg(species: species.Species):
-    logging.warning("Hey!")
+def sg(species: species.Species, format_function: Optional[Callable] = None):
+    if format_function is None:
+        format_function = lambda x: f'{x}'
 
+    num_generation = 0
 
-def sg2():
-    pass
+    stopping_conditions = list()
+    stopping_conditions.append(lambda: num_generation > 100)    # closure!
+
+    while all(not f() for f in stopping_conditions):
+        num_generation += 1
+        i1 = species.sample()
+        i2 = species.sample()
+        if species.is_fitter(i1, i2):
+            species.update(winner=i1, loser=i2)
+            print(format_function(i1))
+        elif species.is_fitter(i2, i1):
+            species.update(winner=i2, loser=i1)
+            print(format_function(i2))

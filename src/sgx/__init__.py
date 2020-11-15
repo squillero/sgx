@@ -37,7 +37,6 @@ import sys
 import warnings
 
 from .utils import logging
-
 from . import allele
 from . import fitness
 from . import algorithms

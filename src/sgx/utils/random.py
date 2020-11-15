@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Sequence, Any
+from typing import Sequence, Any, Optional
 import random
 
 
@@ -39,11 +39,13 @@ class Random:
     def random(self) -> float:
         return self._random.random()
 
-    def choice(self, seq: Sequence[Any]) -> Any:
-        return self._random.choice(seq)
+    def choice(self, population: Sequence[Any], weights: Optional[Sequence[float]] = None) -> Any:
+        """Choose a random element from a non-empty population with optional relative weights."""
+        return self._random.choices(population, weights=weights, k=1)[0]
 
-    def shuffled(self, seq: Sequence[Any]) -> Sequence[Any]:
-        return self._random.sample(seq, len(seq))
+    def shuffled(self, population: Sequence[Any]) -> Sequence[Any]:
+        """Return a new list containing all items from the iterable in random order."""
+        return self._random.sample(population, len(population))
 
 
 SGxRandom = Random()

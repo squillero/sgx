@@ -27,23 +27,49 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
+from typing import Any, Optional, Hashable, Final, final
 from abc import ABC, abstractmethod
-from ..base import Genome
+
 from ..utils import logging
+from ..base import Paranoid, Pedantic
 
 
-class Allele(ABC):
+class Allele(Paranoid, Pedantic, ABC):
+    """Abstract class for Allele/
+
+    An allele must be Hashable (ie. non modifiable)
+    """
+
+    SAMPLE_TYPE__SAMPLE: Final = 'sample'
+    SAMPLE_TYPE__UNIFORM: Final = 'uniform'
+    SAMPLE_TYPE__MODE: Final = 'mode'
+    VALID_SAMPLE_TYPES: Final = [SAMPLE_TYPE__SAMPLE, SAMPLE_TYPE__MODE, SAMPLE_TYPE__UNIFORM]
+    DEFAULT_SAMPLE_TYPE: Final = SAMPLE_TYPE__SAMPLE
 
     @property
+    def mode(self) -> Hashable:
+        return self.sample(sample_type='mode')
+
     @abstractmethod
-    def mode(self) -> Any:
+    def sample(self, sample_type: Optional[str] = DEFAULT_SAMPLE_TYPE) -> Hashable:
+        """Sample.
+
+        sample_type:
+            'sample' (default): random value according to the current probability distribution
+            'uniform': random value according to a uniform probability distribution (ie. completely random)
+            'mode': most common value according to the current probability distribution
+        """
         pass
 
     @abstractmethod
-    def sample(self, mutation_rate: float) -> Genome:
+    def update(self, winner: Hashable, loser: Hashable) -> None:
         pass
 
     @abstractmethod
-    def update(self, winner: Genome, loser: Genome) -> None:
-        pass
+    def describe(self) -> str:
+        """Pretty describe the current allele"""
+        return '*undef*'
+
+    @final
+    def __str__(self) -> str:
+        return f'⟪{self.describe()}⟫'

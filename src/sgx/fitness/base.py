@@ -27,17 +27,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..utils import logging
-
 from typing import final, Any
 import warnings
+
+from ..utils import logging
 from ..base import Pedantic, Paranoid
 
 
 class Fitness(Pedantic, Paranoid):
-    """Fitness of a phenotype, handle multiple formats (eg. scalar, tuple). The class also redefines the relational
-    operator in order to handle different types of optimization (eg. maximization, minimization) and to provide limited
-    support to more complex scenarios (eg. multi-objective optimization)
+    """Fitness of a phenotype, handle multiple formats (eg. scalar, tuple).
+
+    The class also redefines the relational operator in order to handle different types of optimization
+    (eg. maximization, minimization) and to provide limited support to more complex scenarios (eg. multi-objective optimization)
 
     Equalities ('==' and '!=') are based on `is_distinguishable`.
 
@@ -55,22 +56,22 @@ class Fitness(Pedantic, Paranoid):
     """
 
     def is_distinguishable(self, other: 'Fitness') -> bool:
-        """Some differences from the other Fitness may be perceived"""
+        """Check whether some differences from the other Fitness may be perceived."""
         self.check_comparable(other)
         return super().__ne__(other)
 
     def is_fitter(self, other: 'Fitness') -> bool:
-        """Fitter than the other (nb: may be accidental)"""
+        """Check whether fitter than the other (result may be accidental)."""
         self.check_comparable(other)
         return super().__gt__(other)
 
     def is_dominant(self, other: 'Fitness') -> bool:
-        """Dominates the other (certain)"""
+        """Check whether dominates the other (result is certain)."""
         self.check_comparable(other)
         return self.is_fitter(other)
 
     def decorate(self) -> str:
-        """Represent the individual fitness value with a nice string"""
+        """Represent the individual fitness value with a nice string."""
         return f"{super().__str__()}"
 
     # FINAL/WARNINGS
@@ -115,9 +116,9 @@ class Fitness(Pedantic, Paranoid):
         return f"⸨{self.decorate()}⸩"
 
     def check_comparable(self, other: 'Fitness'):
-        assert isinstance(other, Fitness), f"Can't compare a Fitness against a different type ({type(other)})"
+        assert isinstance(other, Fitness), f"Can't is_fitter a Fitness against a different type ({type(other)})"
         assert other.run_paranoia_checks()
-        assert self.__class__ == other.__class__, f"Can't compare Fitness values of different types ({type(self)} vs. {type(other)})"
+        assert self.__class__ == other.__class__, f"Can't is_fitter Fitness values of different types ({type(self)} vs. {type(other)})"
 
     def run_paranoia_checks(self) -> bool:
         return super().run_paranoia_checks()
@@ -131,7 +132,7 @@ class Fitness(Pedantic, Paranoid):
 
 
 def reversed(fitness_class: 'Fitness') -> 'Fitness':
-    """Reverse fitness class turning a maximization problem into a minimization one"""
+    """Reverse fitness class turning a maximization problem into a minimization one."""
     assert isinstance(
         fitness_class,
         type), f"Only <class 'sgx.t.Fitness'> can be reversed. Found an object of type {type(fitness_class)}."
