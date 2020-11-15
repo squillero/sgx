@@ -29,83 +29,118 @@
 
 from ..utils import logging
 
-from typing import final
+from typing import final, Any
 from abc import abstractmethod
+import warnings
 from ..base import Pedantic, Paranoid
+
 
 class Fitness(Pedantic, Paranoid):
     """Fitness of a phenotype, handle multiple formats (eg. scalar, tuple). The class also redefines the relational
     operator in order to handle different types of optimization (eg. maximization, minimization) and to provide limited
     support to more complex scenarios (eg. multi-objective optimization)
 
-    One-character operators represent approximate (uncertain) relationships: is_better (`x > y`), is_worse (`x < y`)
+    The one-character relational operator represent the uncertain relationship `x > y` (`is_fitter`)
 
-    Two-character operators represent exact relationships: is_equal (`x == y`), is_different (`x != y`),
-    dominates (`x >> y`), and is_dominated (`x << y`),
+    The two-character relational operators represent certain relationships: `x == y` (`not is_distinguishable`),
+    `x != y` (`is_distinguishable`), and `x >> y` (`is_dominant`). By default `is_dominant` is defined as `is_fitter`,
+    but it must be changed if `is_fitter` is randomized (its result is uncertain).
 
-    Note: Two-character operators denoting weak inequalities should not be used: `x <= y` and `x >= y`
+    Other operators should not be used: `x < y`, `x <= y`, `x >= y`, and `x << y`.
 
-    When subclassing, one may only redefine is_better (`x > y`), dominates (`x >> y`), and is_equal (`x == y`)
+    When subclassing, one should only redefine `is_fitter`, and optionally `is_distinguishable` and `is_dominant`.
+    Additional sanity checks should be added to `check_comparable`. Subclasses may redefine the `decorate` method to
+    change the values appearance.
     """
 
-    # NON-EXACT
+    def is_distinguishable(self, other: 'Fitness') -> bool:
+        """The differences between f1 and f2 cannot be perceived"""
+        self.check_comparable(other)
+        return super().__ne__(other)
 
-    @abstractmethod
-    def __gt__(self, other: 'Fitness') -> bool:
-        """f1 is better than f2 (may be approximate or accidental)"""
-        logging.debug("__gt__")
+    def is_fitter(self, other: 'Fitness') -> bool:
+        """f1 is fitter than f2 (may be accidental)"""
+        self.check_comparable(other)
         return super().__gt__(other)
 
+    def is_dominant(self, other: 'Fitness') -> bool:
+        """f1 dominates f2 (certain)"""
+        self.check_comparable(other)
+        return self.is_fitter(other)
+
+    def decorate(self) -> str:
+        """Represent the individual fitness value with a nice string"""
+        return f"{super().__str__()}"
+
+    # FINAL/WARNINGS
+
     @final
-    def __lt__(self, other: 'Fitness') -> bool:
-        """f1 is worse than f2 (may be approximate or accidental)"""
-        logging.debug("__lt__")
-        return not (self > other or self == other)
-
-    # EXACT
-
-    @abstractmethod
     def __eq__(self, other: 'Fitness') -> bool:
-        """f1 is equal to f2"""
-        logging.debug("__eq__")
-        return super().__eq__(other)
+        """The differences between f1 and f2 cannot be perceived"""
+        return not self.is_distinguishable(other)
 
     @final
     def __ne__(self, other: 'Fitness') -> bool:
-        """f1 is different from f2"""
-        logging.debug("__ne__")
-        return not self == other
+        """The differences between f1 and f2 may be perceived"""
+        return self.is_distinguishable(other)
 
+    @final
+    def __gt__(self, other: 'Fitness') -> bool:
+        """f1 is fitter than f2 (may be approximate or accidental)"""
+        return self.is_fitter(other)
+
+    @final
     def __rshift__(self, other: 'Fitness') -> bool:
-        """f1 domintes f2"""
-        return self > other
+        """f1 dominates f2 (certain)"""
+        return self.is_dominant(other)
 
-    def __lshift__(self, other: 'Fitness') -> bool:
-        """f1 is dominated by f2"""
-        return self < other
+    @final
+    def __lt__(self, other: 'Fitness') -> None:
+        """Relational operator < is not supported by Fitness"""
+        self.check_comparable(other)
+        warnings.warn("Relational operator < is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
 
-    # NOT TO BE USE
+    @final
+    def __lshift__(self, other: 'Fitness') -> None:
+        """Relational operator << (is dominated by) is not supported by Fitness"""
+        self.check_comparable(other)
+        warnings.warn("Relational operator << (is_dominated_by) is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
 
     @final
     def __ge__(self, other: 'Fitness') -> None:
-        """Weak inequalities between fitness values should not be used"""
-        #warnings.warn("Functions is going to be removed", DeprecationWarning, stacklevel=2)
-        logging.debug("__ge__")
-        raise NotImplementedError
+        """Relational operator >= is not supported by Fitness"""
+        self.check_comparable(other)
+        warnings.warn("Relational operator >= is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
 
     @final
     def __le__(self, other: 'Fitness') -> None:
-        """Weak inequalities between fitness values should not be used"""
-        #warnings.warn("Functions is going to be removed", DeprecationWarning, stacklevel=2)
-        logging.debug("__le__")
-        raise NotImplementedError
+        """Relational operator <= is not supported by Fitness"""
+        self.check_comparable(other)
+        warnings.warn("Relational operator <= is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
+
+    # -------------
+
+    @final
+    def __str__(self):
+        # Double parentheses: ⸨ ⸩  (U+2E28, U+2E29)
+        # White parentheses: ⦅ ⦆  (U+2985, U+2986)
+        # Fullwidth white parentheses:｟ ｠ (U+FF5F, U+FF60)
+        return f"⸨{self.decorate()}⸩"
+
+    def check_comparable(self, other: 'Fitness'):
+        assert isinstance(other, Fitness), f"Can't compare a Fitness against a different type ({type(other)})"
+        assert other.run_paranoia_checks()
+        assert self.__class__ == other.__class__, f"Can't compare Fitness values of different types ({type(self)} vs. {type(other)})"
 
     def run_paranoia_checks(self) -> bool:
         return super().run_paranoia_checks()
 
-    # SPARE CUSTOMIZATION
-    def __str__(self):
-        return f"<f:{super().__str__()}>"
+    def is_valid(self, fitness: 'Fitness') -> bool:
+        try:
+            self.check_comparable(fitness)
+        except AssertionError:
+            return False
+        return True
 
 
 def reversed(fitness_class: 'Fitness') -> 'Fitness':
@@ -114,9 +149,7 @@ def reversed(fitness_class: 'Fitness') -> 'Fitness':
     assert issubclass(fitness_class, Fitness), f"Only <class 'sgx.t.Fitness'> can be reversed. Found {fitness_class}."
     class r(fitness_class):
         def __gt__(self, other: 'Fitness') -> bool:
-            return fitness_class(self) < fitness_class(other)
+            return fitness_class(other) > fitness_class(self)
         def __rshift__(self, other: 'Fitness') -> bool:
-            return fitness_class(self) << fitness_class(other)
-        def __lshift__(self, other: 'Fitness') -> bool:
-            return fitness_class(self) >> fitness_class(other)
+            return fitness_class(other) >> fitness_class(self)
     return r

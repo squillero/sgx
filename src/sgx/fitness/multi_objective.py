@@ -27,8 +27,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .base import reversed
-from .simple import Scalar, Approximate, Integer
+from ..utils import logging
+
+from random import shuffle
 from .simple import Vector
 
-from .multi_objective import Lexicase
+
+class Lexicase(Vector):
+    """Pseudo-MO through Lexicase selection (DOI:10.1109/TEVC.2014.2362729)"""
+
+    def is_fitter(self, other: 'Lexicase') -> bool:
+        self.check_comparable(other)
+        order = list(range(len(self._values)))
+        shuffle(order)
+        logging.debug(f"{[self._values[i] for i in order]} vs. {[other._values[i] for i in order]}")
+        return Vector.compare_vectors([self._values[i] for i in order], [other._values[i] for i in order]) > 0
+
+    def is_dominant(self, other: 'Lexicase') -> bool:
+        self.check_comparable(other)
+        return all(f1 > f2 for f1, f2 in zip(self._values, other._values))

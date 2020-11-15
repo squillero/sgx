@@ -30,8 +30,13 @@
 import sgx
 
 
-genome = sgx.Genome([sgx.allele.Boolean() for _ in range(5)])
-species = sgx.Species(genome,
-                      fitness_function=lambda i: sum(i))
+f1 = sgx.fitness.Lexicase([10,  2, 30,  4, 50,  6], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
+f2 = sgx.fitness.Lexicase([ 1, 20,  3, 40,  5, 60], fitness_type=sgx.fitness.Approximate, abs_tol=.1)
 
-sgx.algorithms.sg(species)
+print(f"{f1} vs. {f2}")
+print("==\t", f1 == f2)
+print("!=\t", f1 != f2)
+print(">>\t", f1 >> f2)
+
+for _ in range (10):
+    print(">\t", f1 > f2)

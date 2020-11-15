@@ -79,6 +79,7 @@ warning = DefaultLogger.warning
 error = DefaultLogger.error
 critical = DefaultLogger.critical
 bare = DefaultLogger.bare
+set_level = lambda *args, **kwargs: DefaultLogger.setLevel(*args, **kwargs)
 
 try:
     import coloredlogs
