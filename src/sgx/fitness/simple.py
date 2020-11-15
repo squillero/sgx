@@ -73,6 +73,7 @@ class Approximate(Fitness, float):
 
 # VECTORS
 
+
 class Vector(Fitness):
     """A generic vector of Fitness values
 
@@ -105,8 +106,10 @@ class Vector(Fitness):
 
         Return -1 if v1 < v2; +1 if v1 > v2; 0 if v1 == v2"""
         for e1, e2 in zip(v1, v2):
-            if e1 > e2: return 1
-            elif e2 > e1: return -1
+            if e1 > e2:
+                return 1
+            elif e2 > e1:
+                return -1
         return 0
 
     def decorate(self) -> str:
@@ -114,4 +117,5 @@ class Vector(Fitness):
 
     def check_comparable(self, other: 'Vector'):
         super().check_comparable(other)
-        assert len(self._values) == len(other._values), f"Can't compare Fitness Vectors of different size ({self} vs. {other})"
+        assert len(self._values) == len(
+            other._values), f"Can't compare Fitness Vectors of different size ({self} vs. {other})"

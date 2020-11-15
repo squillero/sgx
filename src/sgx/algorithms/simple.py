@@ -29,9 +29,9 @@
 
 __all__ = ['sg']
 
-
 from ..utils import logging
 from .. import species
+
 
 def sg(species: species.Species):
     logging.warning("Hey!")

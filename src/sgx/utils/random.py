@@ -32,6 +32,7 @@ import random
 
 
 class Random:
+
     def __init__(self):
         self._random = random.Random()
 

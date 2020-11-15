@@ -34,9 +34,12 @@ from .allele.base import Allele
 
 
 class Species:
-    def __init__(self, genome: Sequence[Any], fitness_function: Optional[Callable[[Sequence[Allele]], Any]] = None,
-                 compare_function: Optional[Callable[[Sequence[Allele],Sequence[Allele]], bool]] = None) -> None:
-        assert not ( fitness_function and compare_function), "Can't specify both fitness and compare functions"
+
+    def __init__(self,
+                 genome: Sequence[Any],
+                 fitness_function: Optional[Callable[[Sequence[Allele]], Any]] = None,
+                 compare_function: Optional[Callable[[Sequence[Allele], Sequence[Allele]], bool]] = None) -> None:
+        assert not (fitness_function and compare_function), "Can't specify both fitness and compare functions"
         assert fitness_function or compare_function, "Either fitness or compare function must be specified"
 
         self._genome = Genome(genome)

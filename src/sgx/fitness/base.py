@@ -40,31 +40,33 @@ class Fitness(Pedantic, Paranoid):
     operator in order to handle different types of optimization (eg. maximization, minimization) and to provide limited
     support to more complex scenarios (eg. multi-objective optimization)
 
-    The one-character relational operator represent the uncertain relationship `x > y` (`is_fitter`)
+    Equalities ('==' and '!=') are based on `is_distinguishable`.
 
-    The two-character relational operators represent certain relationships: `x == y` (`not is_distinguishable`),
-    `x != y` (`is_distinguishable`), and `x >> y` (`is_dominant`). By default `is_dominant` is defined as `is_fitter`,
-    but it must be changed if `is_fitter` is randomized (its result is uncertain).
+    Single angular-bracket operators ('>', '<', '>=', and '<=') are based on `is_fitter` and may be randomized
+    (the result may not be reproducible).
 
-    Other operators should not be used: `x < y`, `x <= y`, `x >= y`, and `x << y`.
+    Double angular-bracket operators ('>>' and '<<') are based on `is_dominant` and the result is stable. By default
+    `is_dominant` is defined as `is_fitter`.
 
-    When subclassing, one should only redefine `is_fitter`, and optionally `is_distinguishable` and `is_dominant`.
+    When subclassing, one should only redefine `is_fitter`, and optionally `is_distinguishable` and `is_dominant`;
+    `is_dominant` must be changed if `is_fitter` is randomized (the result is uncertain).
+
     Additional sanity checks should be added to `check_comparable`. Subclasses may redefine the `decorate` method to
     change the values appearance.
     """
 
     def is_distinguishable(self, other: 'Fitness') -> bool:
-        """The differences between f1 and f2 cannot be perceived"""
+        """Some differences from the other Fitness may be perceived"""
         self.check_comparable(other)
         return super().__ne__(other)
 
     def is_fitter(self, other: 'Fitness') -> bool:
-        """f1 is fitter than f2 (may be accidental)"""
+        """Fitter than the other (nb: may be accidental)"""
         self.check_comparable(other)
         return super().__gt__(other)
 
     def is_dominant(self, other: 'Fitness') -> bool:
-        """f1 dominates f2 (certain)"""
+        """Dominates the other (certain)"""
         self.check_comparable(other)
         return self.is_fitter(other)
 
@@ -76,49 +78,35 @@ class Fitness(Pedantic, Paranoid):
 
     @final
     def __eq__(self, other: 'Fitness') -> bool:
-        """The differences between f1 and f2 cannot be perceived"""
         return not self.is_distinguishable(other)
 
     @final
     def __ne__(self, other: 'Fitness') -> bool:
-        """The differences between f1 and f2 may be perceived"""
         return self.is_distinguishable(other)
 
     @final
     def __gt__(self, other: 'Fitness') -> bool:
-        """f1 is fitter than f2 (may be approximate or accidental)"""
         return self.is_fitter(other)
 
     @final
+    def __lt__(self, other: 'Fitness') -> bool:
+        return other.is_fitter(self)
+
+    @final
+    def __ge__(self, other: 'Fitness') -> bool:
+        return not self.__lt__(other)
+
+    @final
+    def __le__(self, other: 'Fitness') -> bool:
+        return not self.__gt__(other)
+
+    @final
     def __rshift__(self, other: 'Fitness') -> bool:
-        """f1 dominates f2 (certain)"""
         return self.is_dominant(other)
 
     @final
-    def __lt__(self, other: 'Fitness') -> None:
-        """Relational operator < is not supported by Fitness"""
-        self.check_comparable(other)
-        warnings.warn("Relational operator < is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
-
-    @final
-    def __lshift__(self, other: 'Fitness') -> None:
-        """Relational operator << (is dominated by) is not supported by Fitness"""
-        self.check_comparable(other)
-        warnings.warn("Relational operator << (is_dominated_by) is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
-
-    @final
-    def __ge__(self, other: 'Fitness') -> None:
-        """Relational operator >= is not supported by Fitness"""
-        self.check_comparable(other)
-        warnings.warn("Relational operator >= is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
-
-    @final
-    def __le__(self, other: 'Fitness') -> None:
-        """Relational operator <= is not supported by Fitness"""
-        self.check_comparable(other)
-        warnings.warn("Relational operator <= is not defined on Fitness values", category=SyntaxWarning, stacklevel=2)
-
-    # -------------
+    def __lshift__(self, other: 'Fitness') -> bool:
+        return other.is_dominant(self)
 
     @final
     def __str__(self):
@@ -145,11 +133,17 @@ class Fitness(Pedantic, Paranoid):
 
 def reversed(fitness_class: 'Fitness') -> 'Fitness':
     """Reverse fitness class turning a maximization problem into a minimization one"""
-    assert isinstance(fitness_class, type), f"Only <class 'sgx.t.Fitness'> can be reversed. Found an object of type {type(fitness_class)}."
+    assert isinstance(
+        fitness_class,
+        type), f"Only <class 'sgx.t.Fitness'> can be reversed. Found an object of type {type(fitness_class)}."
     assert issubclass(fitness_class, Fitness), f"Only <class 'sgx.t.Fitness'> can be reversed. Found {fitness_class}."
+
     class r(fitness_class):
+
         def __gt__(self, other: 'Fitness') -> bool:
             return fitness_class(other) > fitness_class(self)
+
         def __rshift__(self, other: 'Fitness') -> bool:
             return fitness_class(other) >> fitness_class(self)
+
     return r

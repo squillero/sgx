@@ -29,11 +29,25 @@
 
 from ..utils import logging
 
+from abc import ABC, abstractmethod
 from random import shuffle
 from .simple import Vector
 
 
-class Lexicase(Vector):
+class MultiObjective(Vector, ABC):
+    """Abstract class for handling Molti-Objective problems"""
+
+    @abstractmethod
+    def is_fitter(self, other: 'Lexicase') -> bool:
+        pass
+
+    def is_dominant(self, other: 'Lexicase') -> bool:
+        self.check_comparable(other)
+        return all(f1 >= f2 for f1, f2 in zip(self._values, other._values)) and any(
+            f1 > f2 for f1, f2 in zip(self._values, other._values))
+
+
+class Lexicase(MultiObjective):
     """Pseudo-MO through Lexicase selection (DOI:10.1109/TEVC.2014.2362729)"""
 
     def is_fitter(self, other: 'Lexicase') -> bool:
@@ -42,7 +56,3 @@ class Lexicase(Vector):
         shuffle(order)
         logging.debug(f"{[self._values[i] for i in order]} vs. {[other._values[i] for i in order]}")
         return Vector.compare_vectors([self._values[i] for i in order], [other._values[i] for i in order]) > 0
-
-    def is_dominant(self, other: 'Lexicase') -> bool:
-        self.check_comparable(other)
-        return all(f1 > f2 for f1, f2 in zip(self._values, other._values))
