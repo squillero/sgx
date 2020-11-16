@@ -34,7 +34,7 @@ from .base import Paranoid, Genotype, Tuple
 from .fitness.base import Fitness
 
 
-class Archive(set, Paranoid):
+class Archive(Paranoid):
     """Archive of best solutions so far"""
 
     Element = namedtuple('Element', 'genotype fitness')
@@ -42,32 +42,33 @@ class Archive(set, Paranoid):
     def __init__(self):
         self._archive = set()
 
-    def add(self, genotype: Genotype, fitness: Fitness):
-        """Add a new solution"""
+    def add(self, genotype: Genotype, fitness: Fitness) -> bool:
+        """Add a new solution to Archive, return True if really added."""
         assert isinstance(genotype, Genotype), f"Only a Genotype can be added to the archive: {type(genotype)}"
         assert isinstance(fitness, Fitness), f"Only a Fitness can be added to the archive: {type(fitness)}"
 
         new_element = Archive.Element(genotype, fitness)
-        if new_element in self._archive:
-            logging.debug(f"Elements {genotype} is already present")
-        elif any(ae.fitness >> fitness for ae in self._archive):
-            logging.debug(f"Elements {genotype} is dominated")
+        if new_element in self._archive or any(ae.fitness >> fitness for ae in self._archive):
+            return False
         else:
             new_set = {new_element}
             for old in self._archive:
                 if not any(new.fitness >> old.fitness for new in new_set):
-                    logging.debug(f"!] including {old.genotype}:{old.fitness}")
                     new_set.add(old)
-                else:
-                    logging.debug(f"x] discarding {old.genotype}:{old.fitness}")
             self._archive = new_set
-        self.dump()
+            return True
 
-    def dump(self):
-        logging.info(f"** ARCHIVE")
-        for ae in self._archive:
-            logging.info(f"-] {ae.genotype}:{ae.fitness}")
+    def items(self):
+        return set(self._archive)
 
+    def __len__(self):
+        return len(self._archive)
+
+    def __bool__(self):
+        return bool(self._archive)
+
+    def __iter__(self):
+        return iter([e for e in self._archive])
 
     def run_paranoia_checks(self) -> bool:
         return True

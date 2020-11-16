@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any, Optional, Hashable, Final, final
+from typing import Tuple, Optional, Hashable, Final, final
 from abc import ABC, abstractmethod
 
 from ..utils import logging
@@ -49,6 +49,11 @@ class Allele(Paranoid, Pedantic, ABC):
     @property
     def mode(self) -> Hashable:
         return self.sample(sample_type='mode')
+
+    @property
+    def possible_values(self) -> Optional[Tuple[str]]:
+        """Possible values of the allele. None if not reasonably applicable (eg. a float)"""
+        return None
 
     @abstractmethod
     def sample(self, sample_type: Optional[str] = DEFAULT_SAMPLE_TYPE) -> Hashable:
@@ -73,3 +78,10 @@ class Allele(Paranoid, Pedantic, ABC):
     @final
     def __str__(self) -> str:
         return f'⟪{self.describe()}⟫'
+
+    @final
+    @property
+    def is_squeezable(self) -> bool:
+        if self.possible_values is None:
+            return False
+        return all(len(str(v)) == 1 for v in self.possible_values)

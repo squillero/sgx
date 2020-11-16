@@ -27,11 +27,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .base import reversed
+from typing import Callable, Any, Optional, Type
+from collections import abc
+import warnings
 
-from .simple import Scalar, Approximate, Integer
-from .simple import Vector
+from .base import Fitness
+from .simple import Scalar
+from ..base import Genotype
+from ..utils import logging
 
-from .multi_objective import Lexicase
 
-from .function import FitnessFunction
+class FitnessFunction(abc.Callable):
+    #    def __init__(self, fitness_function: Callable[[Genotype], Fitness], type_: Optional[Fitness.__class__] = Scalar.__class__, best_fitness: Optional[Fitness] = None):
+    def __init__(self,
+                 fitness_function: Callable[[Genotype], Any],
+                 type_: Optional[Type[Fitness]] = Type[Scalar],
+                 best_fitness: Optional[Fitness] = None):
+        self._fitness_function = fitness_function
+        self._fitness_type = type_
+        self._best_fitness = type_(best_fitness)
+
+    def __call__(self, genotype: Genotype) -> Fitness:
+        return self._fitness_type(self._fitness_function(genotype))
+
+    @property
+    def fitness_type(self):
+        return self._fitness_type
+
+    @property
+    def best_fitness(self):
+        return self._best_fitness

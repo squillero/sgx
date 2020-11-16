@@ -30,6 +30,7 @@
 from typing import Tuple, Sequence, Any, Callable, Optional, Hashable
 
 from .utils import logging
+from .fitness import FitnessFunction
 from .utils.random import SGxRandom
 from .base import Genome, Genotype
 from .allele.base import Allele
@@ -41,7 +42,7 @@ class Species:
 
     def __init__(self,
                  genome: Sequence[Any],
-                 fitness_function: Callable[[Sequence[Allele]], Fitness],
+                 fitness_function: FitnessFunction,
                  mutation_rate: Optional[float] = None) -> None:
 
         self._genome = Genome(genome)
@@ -52,7 +53,11 @@ class Species:
 
     @property
     def genome(self) -> Genome:
-        return Genome(self._genome)
+        return self._genome
+
+    @property
+    def fitness_function(self) -> FitnessFunction:
+        return self._fitness_function
 
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Tuple[Hashable]:
         genotype = list()

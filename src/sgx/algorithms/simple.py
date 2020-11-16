@@ -36,15 +36,19 @@ from ..archive import Archive
 from .. import species
 
 
-def sg(species: species.Species, format_function: Optional[Callable] = None):
-    if format_function is None:
-        format_function = lambda x: f'{x}'
-
+def sg(species: species.Species, max_generation: Optional[int] = None):
     num_generation = 0
     archive = Archive()
 
+    # inject stopping conditions (raw)
     stopping_conditions = list()
-    stopping_conditions.append(lambda: num_generation > 2500)    # closure!
+
+    if max_generation:
+        stopping_conditions.append(lambda: num_generation > max_generation)  # closure!
+
+    if species.fitness_function.best_fitness:
+        stopping_conditions.append(
+            lambda: archive and next(iter(archive)).fitness >= species.fitness_function.best_fitness)
 
     while all(not f() for f in stopping_conditions):
         num_generation += 1
@@ -53,10 +57,13 @@ def sg(species: species.Species, format_function: Optional[Callable] = None):
         f1 = species.evaluate(i1)
         f2 = species.evaluate(i2)
 
-        archive.add(i1, f1)
-        archive.add(i2, f2)
-
         if f1 > f2:
             species.update(winner=i1, loser=i2)
         elif f2 > f1:
             species.update(winner=i2, loser=i1)
+
+        archive_changed = archive.add(i1, f1) or archive.add(i2, f2)
+        if archive_changed:
+            logging.info(f"** ARCHIVE AT GENERATION {num_generation}")
+            for ae in archive:
+                logging.info(f"-] {species.genome.genotype_to_str(ae.genotype)}:{ae.fitness}")

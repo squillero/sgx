@@ -81,6 +81,9 @@ class Genotype(tuple, Paranoid):
         super().__init__()
         assert self.run_paranoia_checks()
 
+    def squeeze(self):
+        return str.join('', [str(_) for _ in tuple(self)])
+
     def __str__(self):
         return f"[{str.join(', ', [repr(_) for _ in tuple(self)])}]"
 
@@ -91,15 +94,20 @@ class Genotype(tuple, Paranoid):
         return super().run_paranoia_checks()
 
 
-class Genome(tuple, Pedantic, Paranoid):
+class Genome(list, Pedantic, Paranoid):
     """A tuple of Alleles, each one specifying a set of alternative genes."""
 
     def __init__(self, *args):
-        super().__init__()
+        super().__init__(*args)
         assert self.run_paranoia_checks()
+        self._is_squeezable = all(a.is_squeezable for a in list(self))
 
     def __repr__(self):
         return object.__repr__(self)
+
+    @property
+    def is_squeezable(self):
+        return self._is_squeezable
 
     def run_paranoia_checks(self) -> bool:
         for i, a in enumerate(self):
@@ -111,4 +119,8 @@ class Genome(tuple, Pedantic, Paranoid):
             return False
         return super().is_valid(genotype)
 
-
+    def genotype_to_str(self, genotype: Genotype) -> str:
+        if self._is_squeezable:
+            return genotype.squeeze()
+        else:
+            return str(genotype)

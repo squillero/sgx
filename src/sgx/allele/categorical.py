@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final, Optional, Sequence, Hashable, Union, Dict
+from typing import final, Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose
 
 from ..utils import logging
@@ -92,6 +92,10 @@ class Categorical(Allele):
         self._weights[wi] += update
         self._weights[li] -= update
         assert self.run_paranoia_checks()
+
+    @property
+    def possible_values(self) -> Optional[Tuple[str]]:
+        return self._alternatives
 
     def describe(self) -> str:
         return '｜'.join(f'{a!r}/{w:.2}' for a, w in zip(self._alternatives, self._weights))

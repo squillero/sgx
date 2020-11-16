@@ -27,9 +27,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+PROBLEM_SIZE = 50
+
+from random import shuffle
 import sgx
 
-genome = sgx.t.Genome([sgx.allele.Categorical("01-") for _ in range(20)])
-species = sgx.t.Species(genome=genome, fitness_function=lambda i: sgx.fitness.Scalar(i.count('1')))
+print("\n\nclassical 1-max")
+genome = sgx.t.Genome([sgx.allele.Categorical("01") for _ in range(PROBLEM_SIZE)])
+fitness_function = sgx.fitness.FitnessFunction(lambda i: i.count('1'),
+                                               best_fitness=len(genome),
+                                               type_=sgx.fitness.Scalar)
+species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+#sgx.algorithms.sg(species, max_generation=1000)
 
-sgx.algorithms.sg(species, format_function=lambda x: str.join('', x))
+print("\n\nmulti-values all X's")
+tmp = [sgx.allele.Categorical("abcX") for _ in range(PROBLEM_SIZE)
+      ] + [sgx.allele.Categorical("01X") for _ in range(PROBLEM_SIZE)]
+shuffle(tmp)
+genome = sgx.t.Genome(tmp)
+fitness_function = sgx.fitness.FitnessFunction(lambda i: i.count('X'),
+                                               best_fitness=len(genome),
+                                               type_=sgx.fitness.Scalar)
+species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+#sgx.algorithms.sg(species)
+
+print("\n\nclassical 2-max")
+genome = sgx.t.Genome([sgx.allele.Categorical(['0', '1']) for _ in range(PROBLEM_SIZE)])
+fitness_function = sgx.fitness.FitnessFunction(lambda i: max(i.count('1'), i.count('0')),
+                                               best_fitness=len(genome),
+                                               type_=sgx.fitness.Scalar)
+species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+#sgx.algorithms.sg(species)
+
+print("\n\nreversed 1-max (minimization)")
+genome = sgx.t.Genome([sgx.allele.Categorical("01") for _ in range(PROBLEM_SIZE)])
+fitness_function = sgx.fitness.FitnessFunction(lambda i: i.count('1'),
+                                               best_fitness=0,
+                                               type_=sgx.fitness.reversed(sgx.fitness.Scalar))
+species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+sgx.algorithms.sg(species)
