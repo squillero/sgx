@@ -40,9 +40,9 @@ from .utils import logging
 from . import allele
 from . import fitness
 from . import algorithms
+from .archive import Archive
 from . import t
 
-from .base import *
 from .species import Species
 
 if sys.flags.optimize == 0:

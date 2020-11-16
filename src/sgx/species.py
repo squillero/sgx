@@ -33,6 +33,7 @@ from .utils import logging
 from .utils.random import SGxRandom
 from .base import Genome, Genotype
 from .allele.base import Allele
+from .fitness.base import Fitness
 
 
 class Species:
@@ -40,17 +41,11 @@ class Species:
 
     def __init__(self,
                  genome: Sequence[Any],
-                 fitness_function: Optional[Callable[[Sequence[Allele]], Any]] = None,
-                 compare_function: Optional[Callable[[Sequence[Allele], Sequence[Allele]], bool]] = None,
+                 fitness_function: Callable[[Sequence[Allele]], Fitness],
                  mutation_rate: Optional[float] = None) -> None:
-        assert not (fitness_function and compare_function), "Can't specify both fitness and is_fitter functions"
-        assert fitness_function or compare_function, "Either fitness or is_fitter function must be specified"
 
         self._genome = Genome(genome)
-        if compare_function:
-            self._compare_function = compare_function
-        else:
-            self._compare_function = lambda i1, i2: fitness_function(i1) > fitness_function(i2)
+        self._fitness_function = fitness_function
 
         if mutation_rate is None:
             self._mutation_rate = 1 / len(self._genome)
@@ -72,5 +67,5 @@ class Species:
         for a, w, l in zip(self._genome, winner, loser):
             a.update(winner=w, loser=l)
 
-    def is_fitter(self, ind1: Genotype, ind2: Genotype):
-        return self._compare_function(ind1, ind2)
+    def evaluate(self, genotype: Genotype) -> Fitness:
+        return self._fitness_function(genotype)

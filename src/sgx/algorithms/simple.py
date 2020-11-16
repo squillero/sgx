@@ -32,6 +32,7 @@ __all__ = ['sg']
 from typing import Optional, Callable
 
 from ..utils import logging
+from ..archive import Archive
 from .. import species
 
 
@@ -40,17 +41,22 @@ def sg(species: species.Species, format_function: Optional[Callable] = None):
         format_function = lambda x: f'{x}'
 
     num_generation = 0
+    archive = Archive()
 
     stopping_conditions = list()
-    stopping_conditions.append(lambda: num_generation > 100)    # closure!
+    stopping_conditions.append(lambda: num_generation > 2500)    # closure!
 
     while all(not f() for f in stopping_conditions):
         num_generation += 1
         i1 = species.sample()
         i2 = species.sample()
-        if species.is_fitter(i1, i2):
+        f1 = species.evaluate(i1)
+        f2 = species.evaluate(i2)
+
+        archive.add(i1, f1)
+        archive.add(i2, f2)
+
+        if f1 > f2:
             species.update(winner=i1, loser=i2)
-            print(format_function(i1))
-        elif species.is_fitter(i2, i1):
+        elif f2 > f1:
             species.update(winner=i2, loser=i1)
-            print(format_function(i2))

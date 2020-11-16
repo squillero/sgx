@@ -29,7 +29,7 @@
 
 import sgx
 
-genome = sgx.Genome([sgx.allele.Categorical("01-") for _ in range(20)])
-species = sgx.Species(genome=genome, fitness_function=lambda i: i.count('1'))
+genome = sgx.t.Genome([sgx.allele.Categorical("01-") for _ in range(20)])
+species = sgx.t.Species(genome=genome, fitness_function=lambda i: sgx.fitness.Scalar(i.count('1')))
 
 sgx.algorithms.sg(species, format_function=lambda x: str.join('', x))

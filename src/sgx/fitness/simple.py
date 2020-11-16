@@ -113,9 +113,12 @@ class Vector(Fitness):
         return 0
 
     def decorate(self) -> str:
-        return ','.join(e.decorate() for e in self._values)
+        return ', '.join(e.decorate() for e in self._values)
 
     def check_comparable(self, other: 'Vector'):
         super().check_comparable(other)
         assert len(self._values) == len(
             other._values), f"Can't is_fitter Fitness Vectors of different size ({self} vs. {other})"
+
+    def __hash__(self):
+        return hash(self._values)

@@ -115,6 +115,9 @@ class Fitness(Pedantic, Paranoid):
         # Fullwidth white parentheses:｟ ｠ (U+FF5F, U+FF60)
         return f"⸨{self.decorate()}⸩"
 
+    def __hash__(self) -> int:
+        return super().__hash__()
+
     def check_comparable(self, other: 'Fitness'):
         assert isinstance(other, Fitness), f"Can't is_fitter a Fitness against a different type ({type(other)})"
         assert other.run_paranoia_checks()

@@ -31,6 +31,7 @@ __all__ = ['Genome', 'Genotype', 'Pedantic', 'Paranoid']
 
 from typing import Any, Sequence, Tuple, Hashable, Callable
 from abc import ABC, abstractmethod
+
 from .allele import base
 
 
@@ -80,6 +81,12 @@ class Genotype(tuple, Paranoid):
         super().__init__()
         assert self.run_paranoia_checks()
 
+    def __str__(self):
+        return f"[{str.join(', ', [repr(_) for _ in tuple(self)])}]"
+
+    def __repr__(self):
+        return object.__repr__(self)
+
     def run_paranoia_checks(self) -> bool:
         return super().run_paranoia_checks()
 
@@ -91,6 +98,9 @@ class Genome(tuple, Pedantic, Paranoid):
         super().__init__()
         assert self.run_paranoia_checks()
 
+    def __repr__(self):
+        return object.__repr__(self)
+
     def run_paranoia_checks(self) -> bool:
         for i, a in enumerate(self):
             assert isinstance(a, base.Allele), f"Locus[{i}] is not <class 'sgx.allele.Allele'> > but {type(a)}"
@@ -100,3 +110,5 @@ class Genome(tuple, Pedantic, Paranoid):
         if any(not a.is_valid(g) for a, g in zip(list(self), genotype)):
             return False
         return super().is_valid(genotype)
+
+
