@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PROBLEM_SIZE = 50
+PROBLEM_SIZE = 10
 
 from random import shuffle
 import sgx
@@ -64,5 +64,13 @@ genome = sgx.t.Genome([sgx.allele.Categorical("01") for _ in range(PROBLEM_SIZE)
 fitness_function = sgx.fitness.FitnessFunction(lambda i: i.count('1'),
                                                best_fitness=0,
                                                type_=sgx.fitness.reversed(sgx.fitness.Scalar))
+species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+#sgx.algorithms.sg(species)
+
+print("\n\nMO 2-max")
+genome = sgx.t.Genome([sgx.allele.Categorical(['0', '1']) for _ in range(PROBLEM_SIZE)])
+fitness_function = sgx.fitness.FitnessFunction(lambda i: [i.count('1'), i.count('0')],
+                                               best_fitness=[len(genome), len(genome)],
+                                               type_=sgx.fitness.Lexicase)
 species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
 sgx.algorithms.sg(species)

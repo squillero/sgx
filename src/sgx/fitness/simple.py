@@ -120,5 +120,8 @@ class Vector(Fitness):
         assert len(self._values) == len(
             other._values), f"Can't is_fitter Fitness Vectors of different size ({self} vs. {other})"
 
+    def __iter__(self):
+        return iter(self._values)
+
     def __hash__(self):
         return hash(self._values)
