@@ -28,17 +28,18 @@
 # limitations under the License.
 
 import setuptools
+from sgx import __name__, __version__
 
 with open('index.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
-OPTIONAL = ['m2r', 'coloredlogs', 'matplotlib', 'psutil']
+OPTIONAL = ['coloredlogs', 'matplotlib', 'psutil']
 with open('requirements.txt', 'r', encoding='utf-8') as fh:
     requirements = [r for r in fh.readlines() if not any(o in r for o in OPTIONAL)]
 
 setuptools.setup(
-    name="sgx",
-    version=0.1,
+    name=__name__,
+    version=__version__,
     author="Giovanni Squillero",
     author_email="squillero@polito.it",
     license="Apache-2.0",
@@ -46,16 +47,16 @@ setuptools.setup(
     long_description=long_description,
     #long_description_content_type="text/x-rst",
     long_description_content_type='text/markdown',
-    url="https://squillero.github.io/microgp4/",
+    url="https://github.com/squillero/sgx",
     project_urls={
-        'Bug Tracker': "https://github.com/squillero/microgp4/issues",
-        'Documentation': "https://microgp4.readthedocs.io/en/pre-alpha/",
-        'Source Code': "https://github.com/squillero/microgp4/tree/pre-alpha",
+        'Bug Tracker': "https://github.com/squillero/sgx/issues",
+        #'Documentation': "https://microgp4.readthedocs.io/en/pre-alpha/",
+        'Source Code': "https://github.com/squillero/sgx",
     },
     keywords="optimization evolutionary-algorithm computational-intelligence",
     packages=setuptools.find_packages(),
-    package_data={'src': ['requirements.txt', 'index.md']},
-    data_files=[('src', ['requirements.txt', 'index.md'])],
+    package_data={'': ['requirements.txt', 'index.md']},
+    data_files=[('.', ['requirements.txt', 'index.md'])],
     classifiers=[
         "Programming Language :: Python :: 3", "Operating System :: OS Independent",
         "Development Status :: 2 - Pre-Alpha", "Intended Audience :: Science/Research",
