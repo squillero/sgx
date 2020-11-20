@@ -5,6 +5,7 @@ The Selfish Gene optimization algorithm
 ![Completed: 5%](https://img.shields.io/badge/status-work%20in%20progress%20-yellowgreen.svg)
 ![Language: Python3](https://img.shields.io/badge/language-python3-blue.svg)
 ![](https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-28094298-5&cid=4f34399f-f437-4f67-9390-61c649f9b8b2&dl=https%3A%2F%2Fgithub.com%2Fsquillero%2Fsgx%2F)
+[![Build Status](https://travis-ci.org/squillero/sgx-devel.svg?branch=exp%2Fgiovanni)](https://travis-ci.org/squillero/sgx-devel)
 
 The *Selfish Gene* optimization algorithm (SG) is a population-less evolutionary algorithm loosely inspired by the interpretation of the Darwinian theory given by the English biologist Richard Dawkins and popularized as the *Selfish Gene theory*. It enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](history.md)
 
