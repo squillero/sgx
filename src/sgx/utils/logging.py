@@ -92,7 +92,7 @@ try:
     logging.addLevelName(WARNING, ' WARNING')
     logging.addLevelName(ERROR, ' ERROR')
     logging.addLevelName(CRITICAL, ' CRITICAL')
-    coloredlogs.install(level='DEBUG',
+    coloredlogs.install(level='INFO',
                         logger=DefaultLogger,
                         fmt='%(asctime)s%(levelname)s %(message)s',
                         datefmt='%H:%M:%S',

@@ -38,7 +38,7 @@ fitness_function = sgx.fitness.FitnessFunction(lambda i: i.count('1'),
                                                best_fitness=len(genome),
                                                type_=sgx.fitness.Scalar)
 species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-#sgx.algorithms.sg(species, max_generation=1000)
+sgx.algorithms.sg(species, max_generation=1000)
 
 print("\n\nmulti-values all X's")
 tmp = [sgx.allele.Categorical("abcX") for _ in range(PROBLEM_SIZE)
@@ -73,4 +73,4 @@ fitness_function = sgx.fitness.FitnessFunction(lambda i: [i.count('1'), i.count(
                                                best_fitness=[len(genome), len(genome)],
                                                type_=sgx.fitness.Lexicase)
 species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-sgx.algorithms.sg(species)
+#sgx.algorithms.sg(species)
