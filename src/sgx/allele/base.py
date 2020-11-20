@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple, Optional, Hashable, Final, final
+from typing import Tuple, Optional, Hashable
 from abc import ABC, abstractmethod
 
 from ..utils import logging
@@ -40,11 +40,11 @@ class Allele(Paranoid, Pedantic, ABC):
     An allele must be Hashable (ie. non modifiable)
     """
 
-    SAMPLE_TYPE__SAMPLE: Final = 'sample'
-    SAMPLE_TYPE__UNIFORM: Final = 'uniform'
-    SAMPLE_TYPE__MODE: Final = 'mode'
-    VALID_SAMPLE_TYPES: Final = [SAMPLE_TYPE__SAMPLE, SAMPLE_TYPE__MODE, SAMPLE_TYPE__UNIFORM]
-    DEFAULT_SAMPLE_TYPE: Final = SAMPLE_TYPE__SAMPLE
+    SAMPLE_TYPE__SAMPLE = 'sample'
+    SAMPLE_TYPE__UNIFORM = 'uniform'
+    SAMPLE_TYPE__MODE = 'mode'
+    VALID_SAMPLE_TYPES = [SAMPLE_TYPE__SAMPLE, SAMPLE_TYPE__MODE, SAMPLE_TYPE__UNIFORM]
+    DEFAULT_SAMPLE_TYPE = SAMPLE_TYPE__SAMPLE
 
     @property
     def mode(self) -> Hashable:
@@ -75,11 +75,9 @@ class Allele(Paranoid, Pedantic, ABC):
         """Pretty describe the current allele"""
         return '*undef*'
 
-    @final
     def __str__(self) -> str:
         return f'⟪{self.describe()}⟫'
 
-    @final
     @property
     def is_squeezable(self) -> bool:
         if self.possible_values is None:

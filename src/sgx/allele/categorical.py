@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final, Optional, Sequence, Hashable, Union, Dict, Tuple
+from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose
 
 from ..utils import logging
@@ -37,7 +37,7 @@ from .base import Allele
 
 
 class Categorical(Allele):
-    DEFAULT_LEARNING_RATE: final = .001
+    DEFAULT_LEARNING_RATE = .001
 
     def __init__(self,
                  alternatives: Sequence[Hashable],

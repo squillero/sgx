@@ -27,7 +27,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final, Any
 import warnings
 
 from ..utils import logging
@@ -76,39 +75,30 @@ class Fitness(Pedantic, Paranoid):
 
     # FINAL/WARNINGS
 
-    @final
     def __eq__(self, other: 'Fitness') -> bool:
         return not self.is_distinguishable(other)
 
-    @final
     def __ne__(self, other: 'Fitness') -> bool:
         return self.is_distinguishable(other)
 
-    @final
     def __gt__(self, other: 'Fitness') -> bool:
         return self.is_fitter(other)
 
-    @final
     def __lt__(self, other: 'Fitness') -> bool:
         return other.is_fitter(self)
 
-    @final
     def __ge__(self, other: 'Fitness') -> bool:
         return not self.__lt__(other)
 
-    @final
     def __le__(self, other: 'Fitness') -> bool:
         return not self.__gt__(other)
 
-    @final
     def __rshift__(self, other: 'Fitness') -> bool:
         return self.is_dominant(other)
 
-    @final
     def __lshift__(self, other: 'Fitness') -> bool:
         return other.is_dominant(self)
 
-    @final
     def __str__(self):
         # Double parentheses: ⸨ ⸩  (U+2E28, U+2E29)
         # White parentheses: ⦅ ⦆  (U+2985, U+2986)
