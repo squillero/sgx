@@ -18,7 +18,7 @@ python:
 
 install:
   - cd src
-  - pip install .
+  - pip install --user .
 
 script:
   - pytest

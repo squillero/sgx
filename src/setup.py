@@ -28,7 +28,7 @@
 # limitations under the License.
 
 import setuptools
-from sgx import __name__, __version__
+
 
 with open('index.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
@@ -38,8 +38,8 @@ with open('requirements.txt', 'r', encoding='utf-8') as fh:
     requirements = [r for r in fh.readlines() if not any(o in r for o in OPTIONAL)]
 
 setuptools.setup(
-    name=__name__,
-    version=__version__,
+    name='sgx',
+    version=0.1,
     author="Giovanni Squillero",
     author_email="squillero@polito.it",
     license="Apache-2.0",
@@ -55,6 +55,7 @@ setuptools.setup(
     },
     keywords="optimization evolutionary-algorithm computational-intelligence",
     packages=setuptools.find_packages(),
+    package_dir = {'':'.'},
     package_data={'': ['requirements.txt', 'index.md']},
     data_files=[('.', ['requirements.txt', 'index.md'])],
     classifiers=[
