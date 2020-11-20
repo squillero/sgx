@@ -34,6 +34,7 @@ jobs:
 
 install:
   - cd src
+  - pip3 install --user pytest
   - pip3 install --user .
 
 script:
