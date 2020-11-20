@@ -5,7 +5,7 @@ The Extended Selfish Gene
 ![Completed: 5%](https://img.shields.io/badge/status-work%20in%20progress%20-yellowgreen.svg)
 ![Language: Python3](https://img.shields.io/badge/language-python3-blue.svg)
 ![](https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-28094298-5&cid=4f34399f-f437-4f67-9390-61c649f9b8b2&dl=https%3A%2F%2Fgithub.com%2Fsquillero%2Fsgx%2F)
-[![Build Status](https://travis-ci.org/squillero/sgx-devel.svg?branch=exp%2Fgiovanni)](https://travis-ci.org/squillero/sgx-devel)
+[![Build Status](https://travis-ci.org/squillero/sgx.svg?branch=master)](https://travis-ci.org/squillero/sgx)
 
 The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely inspired by the dashing interpretation of the Darwinian theory of Richard Dawkins popularized in the scientific blockbuster [*The Selfish Gene*](https://en.wikipedia.org/wiki/The_Selfish_Gene). The optimization algorithm enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](HISTORY.md)
 
