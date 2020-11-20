@@ -33,6 +33,13 @@ by a cool interpretation of the Darwinian theory.
 Copyright © 2020 Giovanni Squillero. Licensed under Apache-2.0.
 """
 
+
+__name__ = "sgx"
+__version__ = "0.1"
+__author__ = "Giovanni Squillero"
+__copyright__ = "Copyright (c) 2020 Giovanni Squillero. Licensed under Apache-2.0."
+
+
 import sys
 import warnings
 

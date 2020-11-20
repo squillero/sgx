@@ -17,7 +17,7 @@ python:
 #  - "nightly"  # nightly build
 
 install:
-  - pip install -r src/requirements.txt
+  - cd src & pip install .
 
 script:
   - pytest
