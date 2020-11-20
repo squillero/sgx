@@ -11,12 +11,13 @@
 #############################################################################
 
 language: python
+
 python:
-  - "3.6"      # current default Python on Travis CI
-  - "3.7"
   - "3.8"
-  - "nightly"  # nightly build
+#  - "nightly"  # nightly build
+
 install:
   - pip install -r src/requirements.txt
+
 script:
   - pytest
