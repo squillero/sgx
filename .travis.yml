@@ -14,12 +14,12 @@ language: python
 
 jobs:
   include:
-    - name: "Linux"
-      python:
-        - "3.7"
-        - "3.8"
-        - "3.9"
-        - "nightly"
+    - name: "Python 3.7 on Linux"
+      python: 3.7
+    - name: "Python 3.8 on Linux"
+      python: 3.8
+    - name: "Python 3.9 on Linux"
+      python: 3.9
     - name: "macOS"
       os: osx
       osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
@@ -34,7 +34,7 @@ jobs:
 
 install:
   - cd src
-  - pip3 install pytest
+  - pip3 install --upgrade pytest
   - pip3 install --user .
 
 script:
