@@ -18,7 +18,7 @@ Over the years, the algorithm was [exploited](https://goo.gl/Baw9I8) by differen
 * The default branch is always the more stable
 * Do not peek into experimental branches `exp/*` unless you know what you are doing (the branches contain code that some programmers may find disturbing — viewer discretion is advised)
 * Follow the [style guide](https://github.com/squillero/style/blob/master/python.md)
-* It may be wise to contact Giovanni [[@](mailto:giovanni.squillero@polito.it)] before digging in
+* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)] before digging in
 
 ### Licence
 

@@ -28,6 +28,7 @@
 # limitations under the License.
 
 from collections import namedtuple
+from typing import Sequence, Optional
 
 from .utils import logging
 from .base import Paranoid, Genotype, Tuple
@@ -37,17 +38,18 @@ from .fitness.base import Fitness
 class Archive(Paranoid):
     """Archive of best solutions so far"""
 
-    Element = namedtuple('Element', 'genotype fitness')
+    Element = namedtuple('Element', 'genotype fitness generation')
 
     def __init__(self):
         self._archive = set()
+        self._age = 0
 
-    def add(self, genotype: Genotype, fitness: Fitness) -> bool:
+    def _add(self, genotype: Genotype, fitness: Fitness, generation: int) -> bool:
         """Add a new solution to Archive, return True if really added."""
-        assert isinstance(genotype, Genotype), f"Only a Genotype can be added to the archive: {type(genotype)}"
-        assert isinstance(fitness, Fitness), f"Only a Fitness can be added to the archive: {type(fitness)}"
+        assert isinstance(genotype, Genotype), f"Only <Genotype, Fitness> can be added to the archive (genotype: {type(genotype)})"
+        assert isinstance(fitness, Fitness), f"Only <Genotype, Fitness> can be added to the archive (fitness: {type(fitness)})"
 
-        new_element = Archive.Element(genotype, fitness)
+        new_element = Archive.Element(genotype, fitness, generation)
         if new_element in self._archive or any(ae.fitness >> fitness for ae in self._archive):
             return False
         else:
@@ -58,8 +60,37 @@ class Archive(Paranoid):
             self._archive = new_set
             return True
 
+    def add_generation(self, individuals: Sequence, generation: Optional[int] = None):
+        """Add the individuals of a generation"""
+
+        if generation is None:
+            self._age += 1
+            generation = self._age
+        result = False
+        for g, f in individuals:
+            result = result or self._add(g, f, generation)
+        return result
+
     def items(self):
         return set(self._archive)
+
+    @property
+    def age(self):
+        return self._age
+
+    @property
+    def last_improvement(self):
+        return max(a for _, _, a in self._archive)
+
+    @property
+    def first_improvement(self):
+        return min(a for _, _, a in self._archive)
+
+
+
+    def __iadd__(self, individuals) -> bool:
+        """Add a set of individuals as a new generation."""
+        return self.add_generation(individuals)
 
     def __len__(self):
         return len(self._archive)

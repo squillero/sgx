@@ -31,15 +31,14 @@ __all__ = ['sg']
 
 from typing import Optional, Callable
 from tqdm import tqdm
+from tqdm.notebook import tqdm as tqdm_notebook
 
 from ..utils import logging, jupyter_support
 from ..archive import Archive
 from .. import species
 
-if jupyter_support.is_notebook():
-    from tqdm.notebook import tqdm
 
-def sg(species: species.Species, max_generation: Optional[int] = None):
+def sg(species: species.Species, max_generation: Optional[int] = None, progress: Optional[str] = None):
     num_generation = 0
     archive = Archive()
 
@@ -53,9 +52,15 @@ def sg(species: species.Species, max_generation: Optional[int] = None):
         stopping_conditions.append(
             lambda: archive and next(iter(archive)).fitness >= species.fitness_function.best_fitness)
 
-    pbar = tqdm(total=max_generation)
+    if progress is None and not jupyter_support.is_notebook():
+        pbar = tqdm(total=max_generation)
+    elif progress is None and jupyter_support.is_notebook():
+        pbar = tqdm_notebook(total=max_generation)
+    else:
+        pbar = None
+
     while all(not f() for f in stopping_conditions):
-        pbar.update(1)
+        if pbar: pbar.update(1)
         num_generation += 1
 
         i1 = species.sample()
@@ -68,11 +73,11 @@ def sg(species: species.Species, max_generation: Optional[int] = None):
         elif f2 > f1:
             species.update(winner=i2, loser=i1)
 
-        archive_changed = archive.add(i1, f1) or archive.add(i2, f2)
+        archive_changed = archive.add_generation([[i1, f1], [i2, f2]])
         if archive_changed:
             logging.debug(f"** ARCHIVE AT GENERATION {num_generation} -- SIZE: {len(archive):,}")
             for ae in archive:
-                logging.debug(f"-] {species.genome.genotype_to_str(ae.genotype)}:{ae.fitness}")
+                logging.debug(f"-] {species.genome.format_genotype(ae.genotype)}:{ae.fitness}")
 
-    pbar.close()
+    if pbar: pbar.close()
     return archive

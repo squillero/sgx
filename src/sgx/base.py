@@ -119,7 +119,7 @@ class Genome(list, Pedantic, Paranoid):
             return False
         return super().is_valid(genotype)
 
-    def genotype_to_str(self, genotype: Genotype) -> str:
+    def format_genotype(self, genotype: Genotype) -> str:
         if self._is_squeezable:
             return genotype.squeeze()
         else:

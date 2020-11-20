@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PROBLEM_SIZE = 10
+PROBLEM_SIZE = 100
 
 from random import shuffle
 import sgx
