@@ -16,7 +16,7 @@ Over the years, the algorithm was [exploited](https://goo.gl/Baw9I8) by differen
 * The default branch is always the more stable and the only one tested through [Travis CI](https://en.wikipedia.org/wiki/Travis_CI)
 * Do not peek into `exp/*` unless you know what you are doing (the experimental branches contain code that some programmers may find disturbing — viewer discretion is advised)
 * If you want to contribute, please follow the [style guide](https://github.com/squillero/style/blob/master/python.md)
-* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)] before digging in
+* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)]
 
 ### Licence
 
