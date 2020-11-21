@@ -56,9 +56,7 @@ if sys.flags.optimize == 0:
     warnings.warn("All debug checks are active, performances are significantly impaired.", RuntimeWarning, stacklevel=2)
 
 if sys.version_info < (3, 7):
-    warnings.warn("The code is not compatible with Python prior to v3.7", Warning, stacklevel=2)
-elif sys.version_info < (3, 8):
-    warnings.warn("The code is not has only been tested with Python v3.8", Warning, stacklevel=2)
+    warnings.warn("The code is not known to be compatible with Python prior to v3.7", Warning, stacklevel=2)
 
 sys.stderr.flush()
 sys.stdout.flush()

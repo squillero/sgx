@@ -26,18 +26,42 @@ install:
 
 jobs:
   include:
-    - name: "Python 3.7 on Linux"
+    - name: "Python 3.7 on Ubuntu Trusty 14.04"
       python: 3.7
-    - name: "Python 3.8 on Linux"
+      dist: trusty
+    - name: "Python 3.8 on Ubuntu Xenial 16.04"
       python: 3.8
-    - name: "Python 3.9 on Linux"
+      dist: xenial
+    - name: "Python 3.9 on Ubuntu Bionic 18.04"
       python: 3.9
       dist: bionic
-    - name: "Bleeding edge Python on Linux"
+    - name: "Bleeding edge Python on Ubuntu Focal 20.04"
       python: nightly
       dist: focal
 
-    - name: "macOS"
+    - name: "Python 3.7 on Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.7
+        - python -m pip install --upgrade pip
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    - name: "Python 3.8 on Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.8
+        - python -m pip install --upgrade pip
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    - name: "Python 3.9 on Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.9
+        - python -m pip install --upgrade pip
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+
+    - name: "Python 3.7 on macOS"
       os: osx
       osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
       language: shell       # 'language: python' is an error on Travis CI macOS
@@ -45,14 +69,6 @@ jobs:
         - cd src
         - pip3 install --upgrade pytest
         - pip3 install --user .
-
-    - name: "Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
-      before_install:
-        - choco install python --version 3.8.0
-        - python -m pip install --upgrade pip
-      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
 script:
   - pytest

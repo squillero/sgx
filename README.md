@@ -7,7 +7,7 @@ The Extended Selfish Gene
 ![](https://www.google-analytics.com/collect?v=1&t=pageview&tid=UA-28094298-5&cid=4f34399f-f437-4f67-9390-61c649f9b8b2&dl=https%3A%2F%2Fgithub.com%2Fsquillero%2Fsgx%2F)
 [![Build Status](https://travis-ci.org/squillero/sgx.svg?branch=master)](https://travis-ci.org/squillero/sgx)
 
-The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely inspired by the dashing interpretation of the Darwinian theory of Richard Dawkins popularized in the scientific blockbuster [*The Selfish Gene*](https://en.wikipedia.org/wiki/The_Selfish_Gene). The optimization algorithm enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](HISTORY.md)
+The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely inspired by the dashing interpretation of the Darwinian theory popularized in the scientific blockbuster [*The Selfish Gene*](https://en.wikipedia.org/wiki/The_Selfish_Gene). The optimization algorithm enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](HISTORY.md)
 
 Over the years, the algorithm was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. To celebrate hitting the quarter century mark, the *Extended Selfish Gene* (SGX) is a brand new implementation of the original idea, rewritten from scratch in Python 3, with improved usability and tons of new features.
 
