@@ -56,7 +56,7 @@ if sys.flags.optimize == 0:
     warnings.warn("All debug checks are active, performances are significantly impaired.", RuntimeWarning, stacklevel=2)
 
 if sys.version_info < (3, 7):
-    warnings.warn("The code is not known to be compatible with Python prior to v3.7", Warning, stacklevel=2)
+    warnings.warn(f"The SGX was tested on Python version 3.7 and later (this is v{sys.version_info.major}.{sys.version_info.minor})", Warning, stacklevel=2)
 
 sys.stderr.flush()
 sys.stdout.flush()
