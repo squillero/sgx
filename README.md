@@ -9,14 +9,14 @@ The Extended Selfish Gene
 
 The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely inspired by the dashing interpretation of the Darwinian theory popularized in the scientific blockbuster [*The Selfish Gene*](https://en.wikipedia.org/wiki/The_Selfish_Gene). The optimization algorithm enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](HISTORY.md)
 
-Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. To celebrate hitting the quarter century mark, the *Extended Selfish Gene* (SGX) is a brand new implementation of the idea, rewritten from scratch in Python 3, with improved usability and tons of new features.
+Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. To prepare celebrations for the quarter century mark, the *Extended Selfish Gene* (SGX) is a brand new implementation, rewritten from scratch in Python 3, with improved usability and tons of new features.
 
 #### :warning: SGX is currently under active development: This repo is only useful if you want to hack into the code.
 
 * The default branch is always the more stable and the only one tested through [Travis CI](https://en.wikipedia.org/wiki/Travis_CI)
 * Do not peek into `exp/*` unless you know what you are doing (the experimental branches contain code that some programmers may find disturbing — viewer discretion is advised)
 * If you want to contribute, please follow the [style guide](https://github.com/squillero/style/blob/master/python.md)
-* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)]
+* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)] before digging into
 
 ### Licence
 
