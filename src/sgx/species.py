@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple, Sequence, Any, Callable, Optional, Hashable
+from typing import Tuple, Sequence, Any, Callable, Optional, Hashable, Union
 
 from .utils import logging
 from .fitness import FitnessFunction
@@ -59,7 +59,7 @@ class Species:
     def fitness_function(self) -> FitnessFunction:
         return self._fitness_function
 
-    def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Tuple[Hashable]:
+    def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Genotype:
         genotype = list()
         for a in self._genome:
             if SGxRandom.random() < self._mutation_rate:
@@ -68,7 +68,7 @@ class Species:
                 genotype.append(a.sample(sample_type='sample'))
         return Genotype(genotype)
 
-    def update(self, winner: Genotype, loser: Genome):
+    def update(self, winner: Genotype, loser: Genotype):
         for a, w, l in zip(self._genome, winner, loser):
             a.update(winner=w, loser=l)
 
