@@ -33,16 +33,16 @@ jobs:
     - name: "Python 3.8 on Ubuntu 16.04"
       python: 3.8
       dist: xenial
-    - name: "Python 3.9 on Ubuntu 18.04 (AMD w/o optional packages)"
+    - name: "Python 3.9 on Ubuntu 18.04"
+      python: 3.9
+      arch: amd64
+      dist: bionic
+    - name: "Python 3.9 on Ubuntu 18.04 (w/o optional packages)"
       python: 3.9
       arch: amd64
       dist: bionic
       before_script:
         - pip3 uninstall --yes coloredlogs psutil
-    - name: "Python 3.9 on Ubuntu 18.04 (AMD)"
-      python: 3.9
-      arch: amd64
-      dist: bionic
     - name: "Python 3.9 on Ubuntu 18.04 (ARM)"
       python: 3.9
       arch: arm64
@@ -70,10 +70,6 @@ jobs:
       os: osx
       osx_image: xcode11.2
       language: shell
-      install:
-        - cd src
-        - pip3 install --upgrade pytest
-        - pip3 install --user .
 
 script:
   - pytest
