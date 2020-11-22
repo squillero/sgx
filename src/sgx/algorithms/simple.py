@@ -31,15 +31,34 @@ __all__ = ['sg']
 
 from typing import Optional, Callable, Union
 from tqdm import tqdm
-from tqdm.notebook import tqdm as tqdm_notebook
+try:
+    # could fail with -O...
+    from tqdm.notebook import tqdm as tqdm_notebook
+except:
+    tqdm_notebook = tqdm
 
 from ..utils import logging, jupyter_support
 from ..archive import Archive
 from .. import species as species_
 
-TQDM_DEFAULT_OPTIONS = {'bar_format': '{n:,} generations in {elapsed} (speed: {rate_fmt})', 'unit': 'gen', 'unit_scale': True}
+TQDM_DEFAULT_OPTIONS = {
+    'bar_format': '{n:,} generations in {elapsed} (speed: {rate_fmt})',
+    'unit': 'gen',
+    'unit_scale': True,
+    'leave': False
+}
 
-def sg(species: species_.Species, max_generation: Optional[int] = None, progress_bar: Optional[Union[str, bool]] = True):
+
+def sg(species: species_.Species,
+       max_generation: Optional[int] = None,
+       progress_bar: Optional[Union[str, bool]] = True):
+    """A vanilla optimizer
+
+    The algorithm is described in the paper *A new evolutionary algorithm inspired by the selfish gene theory*
+    (DOI: 10.1109/ICEC.1998.700092)
+    """
+
+
     tqdm_options = TQDM_DEFAULT_OPTIONS
     num_generation = 0
     archive = Archive()

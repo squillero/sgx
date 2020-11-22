@@ -29,7 +29,6 @@
 
 import setuptools
 
-
 with open('index.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
@@ -55,7 +54,7 @@ setuptools.setup(
     },
     keywords="optimization evolutionary-algorithm computational-intelligence",
     packages=setuptools.find_packages(),
-    package_dir = {'':'.'},
+    package_dir={'': '.'},
     package_data={'': ['requirements.txt', 'index.md']},
     data_files=[('.', ['requirements.txt', 'index.md'])],
     classifiers=[

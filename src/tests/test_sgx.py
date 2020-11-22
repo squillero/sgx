@@ -30,6 +30,7 @@
 import platform
 import sgx
 
+
 def test_init():
     print(f"\n\n*** {sgx.__name__} v{sgx.__version__}")
     print("*** " + "; ".join(f"{k}: {v}" for k, v in platform.uname()._asdict().items()))
