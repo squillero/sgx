@@ -27,31 +27,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Sequence, Any, Optional, Tuple
 import random
+from sgx.utils.random import SGxRandom
 
 
-class Random:
+def test_consistency():
+    SGxRandom._random.seed(42)
+    r0 = list()
+    r1 = list()
+    for _ in range(100):
+        r0.append(SGxRandom.random())
+        r1.append(random.random())
+    assert r1 == r1
 
-    def __init__(self, seed: Optional = None, state: Optional[Tuple] = None):
-        assert not (seed and state), "Can't set both seed and state"
-        self._random = random.Random()
-        if state:
-            self._random.setstate(state)
-        else:
-            self._random.seed(seed)
+    SGxRandom._random.seed(42)
+    r2 = [SGxRandom.random() for _ in range(100)]
+    assert r0 == r2
 
-    def random(self) -> float:
-        """Return a random value in the interval [0, 1)."""
-        return self._random.random()
+    SGxRandom._random.seed(42)
+    state = SGxRandom._random.getstate()
+    r3 = [SGxRandom.random() for _ in range(100)]
+    assert state != SGxRandom._random.getstate()
+    SGxRandom._random.seed(42)
+    assert state == SGxRandom._random.getstate()
+    state_std = random.getstate()
+    random.shuffle(r1)
+    assert state_std != random.getstate()
+    assert state == SGxRandom._random.getstate()
+    r4 = [SGxRandom.random() for _ in range(100)]
+    assert r3 == r4
 
-    def choice(self, population: Sequence[Any], weights: Optional[Sequence[float]] = None) -> Any:
-        """Return a random element from a non-empty population with optional relative weights."""
-        return self._random.choices(population, weights=weights, k=1)[0]
+def test_choice():
+    for _ in range(1000):
+        assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[1, 0, 0, 0, 0]) == 0
+        assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[0, .25, .25, .25, .25]) != 0
 
-    def shuffled(self, population: Sequence[Any]) -> Sequence[Any]:
-        """Return a new list containing all items from the iterable in random order."""
-        return self._random.sample(population, len(population))
-
-
-SGxRandom = Random()
+def test_shuffled():
+    assert list(range(1000)) == sorted(SGxRandom.shuffled(list(range(1000))))

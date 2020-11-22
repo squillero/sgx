@@ -27,9 +27,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""THE E(X)TENDED (S)ELFISH (G)ENE ALGORITHM
-A quick 'n dirty versatile population-less evolutionary optimizer loosely inspired
-by a cool interpretation of the Darwinian theory.
+"""The eXtended Selfish Gene algorithm (SGX):
+A population-less EA loosely inspired by a cool interpretation of the Darwinian theory.
+See: https://github.com/squillero/sgx
+
 Copyright © 2020 Giovanni Squillero. Licensed under Apache-2.0.
 """
 
