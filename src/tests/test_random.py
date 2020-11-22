@@ -57,10 +57,12 @@ def test_consistency():
     r4 = [SGxRandom.random() for _ in range(100)]
     assert r3 == r4
 
+
 def test_choice():
     for _ in range(1000):
         assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[1, 0, 0, 0, 0]) == 0
         assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[0, .25, .25, .25, .25]) != 0
+
 
 def test_shuffled():
     assert list(range(1000)) == sorted(SGxRandom.shuffled(list(range(1000))))
