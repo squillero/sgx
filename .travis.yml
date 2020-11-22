@@ -70,6 +70,11 @@ jobs:
       os: osx
       osx_image: xcode11.2
       language: shell
+      install:
+        - cd src
+        - pip3 install --upgrade pytest
+        - pip3 install --user .
+        - pip3 install --upgrade coloredlogs psutil
 
 script:
   - pytest
