@@ -37,7 +37,7 @@ jobs:
       python: 3.9
       arch: amd64
       dist: bionic
-      before_install:
+      before_script:
         - pip3 uninstall coloredlogs psutil
     - name: "Python 3.9 on Ubuntu 18.04 (AMD)"
       python: 3.9
