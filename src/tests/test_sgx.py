@@ -27,19 +27,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import platform
+import sgx
 
-def is_notebook() -> bool:
-    """Check if running inside a notebook
-
-    Credits: https://stackoverflow.com/questions/15411967/
-    """
-    try:
-        shell = get_ipython().__class__.__name__
-        if shell == 'ZMQInteractiveShell':
-            return True  # Jupyter notebook or qtconsole
-        elif shell == 'TerminalInteractiveShell':
-            return False  # Terminal running IPython
-        else:
-            return False  # Other type (?)
-    except NameError:
-        return False  # Probably standard Python interpreter
+def test_init():
+    print(f"\n\n*** {sgx.__name__} v{sgx.__version__}")
+    print("*** " + "; ".join(f"{k}: {v}" for k, v in platform.uname()._asdict().items()))

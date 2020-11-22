@@ -29,16 +29,18 @@
 
 __all__ = ['sg']
 
-from typing import Optional, Callable
+from typing import Optional, Callable, Union
 from tqdm import tqdm
 from tqdm.notebook import tqdm as tqdm_notebook
 
 from ..utils import logging, jupyter_support
 from ..archive import Archive
-from .. import species
+from .. import species as species_
 
+TQDM_DEFAULT_OPTIONS = {'bar_format': '{n:,} generations in {elapsed} (speed: {rate_fmt})', 'unit': 'gen', 'unit_scale': True}
 
-def sg(species: species.Species, max_generation: Optional[int] = None, progress: Optional[str] = None):
+def sg(species: species_.Species, max_generation: Optional[int] = None, progress_bar: Optional[Union[str, bool]] = True):
+    tqdm_options = TQDM_DEFAULT_OPTIONS
     num_generation = 0
     archive = Archive()
 
@@ -47,20 +49,24 @@ def sg(species: species.Species, max_generation: Optional[int] = None, progress:
 
     if max_generation:
         stopping_conditions.append(lambda: num_generation >= max_generation)  # closure!
+        tqdm_options['bar_format'] = '{percentage:.0f}%|{bar}|{remaining} ({rate_fmt})'
 
     if species.fitness_function.best_fitness:
         stopping_conditions.append(
             lambda: archive and next(iter(archive)).fitness >= species.fitness_function.best_fitness)
 
-    if progress is None and not jupyter_support.is_notebook():
-        pbar = tqdm(total=max_generation)
-    elif progress is None and jupyter_support.is_notebook():
-        pbar = tqdm_notebook(total=max_generation)
+    if progress_bar == 'tqdm' or (progress_bar is True and not jupyter_support.is_notebook()):
+        bar = tqdm(total=max_generation, **tqdm_options)
+    elif progress_bar == 'notebook' or (progress_bar is True and jupyter_support.is_notebook()):
+        bar = tqdm_notebook(total=max_generation, **tqdm_options)
+    elif not progress_bar:
+        bar = None
     else:
-        pbar = None
+        assert False, "D'ho!?"
 
     while all(not f() for f in stopping_conditions):
-        if pbar: pbar.update(1)
+        if bar is not None:
+            bar.update(1)
         num_generation += 1
 
         i1 = species.sample()
@@ -79,5 +85,6 @@ def sg(species: species.Species, max_generation: Optional[int] = None, progress:
             for ae in archive:
                 logging.debug(f"-] {species.genome.format_genotype(ae.genotype)}:{ae.fitness}")
 
-    if pbar: pbar.close()
+    if bar is not None:
+        bar.close()
     return archive
