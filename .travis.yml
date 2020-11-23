@@ -27,7 +27,7 @@ install:
 
 jobs:
   include:
-    - name: "Python 3.7 on Ubuntu 16.04"
+    - name: "Python 3.6 on Ubuntu 16.04"
       python: 3.6
       dist: xenial
     - name: "Python 3.7 on Ubuntu 16.04"
