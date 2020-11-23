@@ -28,3 +28,4 @@
 # limitations under the License.
 
 from .categorical import Categorical
+from .boolean import Boolean

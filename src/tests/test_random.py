@@ -27,10 +27,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import platform
-import sgx
+import random
+from sgx.utils.random import SGxRandom
 
 
-def test_init():
-    print(f"\n\n*** {sgx.__name__} v{sgx.__version__}")
-    print("*** " + "; ".join(f"{k}: {v}" for k, v in platform.uname()._asdict().items()))
+def test_consistency():
+    SGxRandom._random.seed(42)
+    r0 = list()
+    r1 = list()
+    for _ in range(100):
+        r0.append(SGxRandom.random())
+        r1.append(random.random())
+    assert r1 == r1
+
+    SGxRandom._random.seed(42)
+    r2 = [SGxRandom.random() for _ in range(100)]
+    assert r0 == r2
+
+    SGxRandom._random.seed(42)
+    state = SGxRandom._random.getstate()
+    r3 = [SGxRandom.random() for _ in range(100)]
+    assert state != SGxRandom._random.getstate()
+    SGxRandom._random.seed(42)
+    assert state == SGxRandom._random.getstate()
+    state_std = random.getstate()
+    random.shuffle(r1)
+    assert state_std != random.getstate()
+    assert state == SGxRandom._random.getstate()
+    r4 = [SGxRandom.random() for _ in range(100)]
+    assert r3 == r4
+
+
+def test_choice():
+    for _ in range(1000):
+        assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[1, 0, 0, 0, 0]) == 0
+        assert SGxRandom.choice([0, 1, 2, 3, 4], weights=[0, .25, .25, .25, .25]) != 0
+
+
+def test_shuffled():
+    assert list(range(1000)) == sorted(SGxRandom.shuffled(list(range(1000))))

@@ -46,8 +46,10 @@ class Archive(Paranoid):
 
     def _add(self, genotype: Genotype, fitness: Fitness, generation: int) -> bool:
         """Add a new solution to Archive, return True if really added."""
-        assert isinstance(genotype, Genotype), f"Only <Genotype, Fitness> can be added to the archive (genotype: {type(genotype)})"
-        assert isinstance(fitness, Fitness), f"Only <Genotype, Fitness> can be added to the archive (fitness: {type(fitness)})"
+        assert isinstance(
+            genotype, Genotype), f"Only <Genotype, Fitness> can be added to the archive (genotype: {type(genotype)})"
+        assert isinstance(fitness,
+                          Fitness), f"Only <Genotype, Fitness> can be added to the archive (fitness: {type(fitness)})"
 
         new_element = Archive.Element(genotype, fitness, generation)
         if new_element in self._archive or any(ae.fitness >> fitness for ae in self._archive):
@@ -71,8 +73,9 @@ class Archive(Paranoid):
             result = result or self._add(g, f, generation)
         return result
 
+    @property
     def items(self):
-        return set(self._archive)
+        return list(self._archive)
 
     @property
     def age(self):
@@ -85,8 +88,6 @@ class Archive(Paranoid):
     @property
     def first_improvement(self):
         return min(a for _, _, a in self._archive)
-
-
 
     def __iadd__(self, individuals) -> bool:
         """Add a set of individuals as a new generation."""

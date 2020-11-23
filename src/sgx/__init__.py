@@ -27,18 +27,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""THE E(X)TENDED (S)ELFISH (G)ENE ALGORITHM
-A quick 'n dirty versatile population-less evolutionary optimizer loosely inspired
-by a cool interpretation of the Darwinian theory.
+"""The eXtended Selfish Gene algorithm (SGX):
+A population-less EA loosely inspired by a cool interpretation of the Darwinian theory.
+See: https://github.com/squillero/sgx
+
 Copyright © 2020 Giovanni Squillero. Licensed under Apache-2.0.
 """
-
 
 __name__ = "sgx"
 __version__ = "0.1"
 __author__ = "Giovanni Squillero"
 __copyright__ = "Copyright (c) 2020 Giovanni Squillero. Licensed under Apache-2.0."
-
 
 import sys
 import warnings
@@ -56,7 +55,10 @@ if sys.flags.optimize == 0:
     warnings.warn("All debug checks are active, performances are significantly impaired.", RuntimeWarning, stacklevel=2)
 
 if sys.version_info < (3, 7):
-    warnings.warn(f"Python version 3.7 or later is required (this is v{sys.version_info.major}.{sys.version_info.minor})", Warning, stacklevel=2)
+    warnings.warn(
+        f"Python version 3.7 or later is required (this is v{sys.version_info.major}.{sys.version_info.minor})",
+        Warning,
+        stacklevel=2)
 
 sys.stderr.flush()
 sys.stdout.flush()
