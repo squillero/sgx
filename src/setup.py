@@ -28,8 +28,9 @@
 # limitations under the License.
 
 import setuptools
+from sgx import __name__, __version__
 
-with open('index.md', 'r', encoding='utf-8') as fh:
+with open('pypi-description.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 OPTIONAL = ['coloredlogs', 'matplotlib', 'psutil']
@@ -37,8 +38,8 @@ with open('requirements.txt', 'r', encoding='utf-8') as fh:
     requirements = [r for r in fh.readlines() if not any(o in r for o in OPTIONAL)]
 
 setuptools.setup(
-    name='sgx',
-    version=0.1,
+    name=__name__,
+    version=__version__,
     author="Giovanni Squillero",
     author_email="squillero@polito.it",
     license="Apache-2.0",
@@ -55,12 +56,15 @@ setuptools.setup(
     keywords="optimization evolutionary-algorithm computational-intelligence",
     packages=setuptools.find_packages(),
     package_dir={'': '.'},
-    package_data={'': ['requirements.txt', 'index.md']},
-    data_files=[('.', ['requirements.txt', 'index.md'])],
+    package_data={'': ['requirements.txt', 'pypi-description.md']},
+    data_files=[('.', ['requirements.txt', 'pypi-description.md'])],
     classifiers=[
-        "Programming Language :: Python :: 3", "Operating System :: OS Independent",
-        "Development Status :: 2 - Pre-Alpha", "Intended Audience :: Science/Research",
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Mathematics",
         "License :: OSI Approved :: Apache Software License"
     ],
     install_requires=requirements,

@@ -11,14 +11,26 @@ The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely
 
 Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. For celebrating (almost) a quarter century mark, it has been  rewritten from scratch in Python 3, with improved usability and tons of new features. 
 
-#### :warning: SGX is currently under active development: This repo is only useful if you want to hack into the code.
+> #### :warning: SGX is currently under active development
+
+## Installation
+
+SGX is available as a PyPi package from https://pypi.org/project/sgx and installing it is as simple as
+
+```shell script
+$ install microgp
+```
+
+## Source code
+
+This repo is only useful if you want to hack into the code.
 
 * The default branch is always the more stable and the only one tested through [Travis CI](https://en.wikipedia.org/wiki/Travis_CI)
 * The experimental branches `exp/*` contain code and comments that some programmers may find disturbing —  Viewers discretion advised
 * Before trying to contribute read [this paper](http://doi.org/10.1007/978-3-662-43505-2_45) and [this style guide](https://github.com/squillero/style/blob/master/python.md)
 * It may be wise to send Giovanni an email [[@](mailto:giovanni.squillero@polito.it)] before digging into the project
 
-### Licence
+## Licence
 
-Copyright © 2020 [Giovanni Squillero](https://staff.polito.it/giovanni.squillero/)  
+**Copyright © 2020 [Giovanni Squillero](https://staff.polito.it/giovanni.squillero/)**  
 The Extended Selfish Gene (SGX) is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under the permissive [Apache License 2.0](https://www.tldrlegal.com/l/apache2).
