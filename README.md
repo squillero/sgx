@@ -9,16 +9,16 @@ The Extended Selfish Gene
 
 The *Selfish Gene Algorithm* is a population-less evolutionary optimizer loosely inspired by the dashing interpretation of the Darwinian theory popularized in the scientific blockbuster [*The Selfish Gene*](https://en.wikipedia.org/wiki/The_Selfish_Gene). It enables a user to efficiently find the list parameters, either discrete symbols or real numbers, that maximizes a given target function. [**[MORE]**](HISTORY.md)
 
-Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. To prepare the celebrations for the quarter century mark, it has been  rewritten from scratch in Python 3, with improved usability and tons of new features. 
+Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by different researchers, and a few brand new approaches derived from it. For celebrating (almost) a quarter century mark, it has been  rewritten from scratch in Python 3, with improved usability and tons of new features. 
 
 #### :warning: SGX is currently under active development: This repo is only useful if you want to hack into the code.
 
 * The default branch is always the more stable and the only one tested through [Travis CI](https://en.wikipedia.org/wiki/Travis_CI)
-* Do not peek into `exp/*` unless you know what you are doing (the experimental branches contain code that some programmers may find disturbing — viewer discretion is advised)
-* If you want to contribute, please read [this paper](http://doi.org/10.1007/978-3-662-43505-2_45) and follow the [style guide](https://github.com/squillero/style/blob/master/python.md)
-* It may be wise to contact [Giovanni](https://staff.polito.it/giovanni.squillero/) [[@](mailto:giovanni.squillero@polito.it)] before digging into
+* The experimental branches `exp/*` contain code and comments that some programmers may find disturbing —  Viewers discretion advised
+* Before trying to contribute read [this paper](http://doi.org/10.1007/978-3-662-43505-2_45) and [this style guide](https://github.com/squillero/style/blob/master/python.md)
+* It may be wise to send Giovanni an email [[@](mailto:giovanni.squillero@polito.it)] before digging into the project
 
 ### Licence
 
-Copyright © 2020 Giovanni Squillero  
+Copyright © 2020 [Giovanni Squillero](https://staff.polito.it/giovanni.squillero/)  
 The Extended Selfish Gene (SGX) is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under the permissive [Apache License 2.0](https://www.tldrlegal.com/l/apache2).
