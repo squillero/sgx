@@ -30,7 +30,10 @@
 __all__ = ['sg']
 
 from typing import Optional, Callable, Union
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+except:
+    tqdm = None
 try:
     # could fail with -O...
     from tqdm.notebook import tqdm as tqdm_notebook
@@ -73,12 +76,12 @@ def sg(species: species_.Species,
         stopping_conditions.append(
             lambda: archive and next(iter(archive)).fitness >= species.fitness_function.best_fitness)
 
-    if progress_bar == 'tqdm' or (progress_bar is True and not jupyter_support.is_notebook()):
+    if tqdm is None or not progress_bar:
+        bar = None
+    elif progress_bar == 'tqdm' or (progress_bar is True and not jupyter_support.is_notebook()):
         bar = tqdm(total=max_generation, **tqdm_options)
     elif progress_bar == 'notebook' or (progress_bar is True and jupyter_support.is_notebook()):
         bar = tqdm_notebook(total=max_generation, **tqdm_options)
-    elif not progress_bar:
-        bar = None
     else:
         assert False, "D'ho!?"
 

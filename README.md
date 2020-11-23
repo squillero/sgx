@@ -19,7 +19,7 @@ Since 1998, the *Selfish Gene* was [exploited](https://goo.gl/Baw9I8) by differe
 SGX is available as a [PyPi package](https://pypi.org/project/sgx) and installing it is as simple as
 
 ```shell
-$ pip install microgp
+$ pip install sgx
 ```
 
 ## Source code
