@@ -27,7 +27,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PROBLEM_SIZE = 10
+PROBLEM_SIZE = 100
 
 from random import shuffle
 import sgx
@@ -38,7 +38,8 @@ fitness_function = sgx.fitness.FitnessFunction(lambda i: sum(i),
                                                best_fitness=len(genome),
                                                type_=sgx.fitness.Scalar)
 species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-sgx.algorithms.sg(species, max_generation=None)
+archive = sgx.algorithms.sg(species, max_generation=100_000)
+print(list(archive))
 
 # print("\n\nmulti-values all X's")
 # tmp = [sgx.allele.Categorical("abcX") for _ in range(PROBLEM_SIZE)

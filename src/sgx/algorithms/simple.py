@@ -58,7 +58,6 @@ def sg(species: species_.Species,
     (DOI: 10.1109/ICEC.1998.700092)
     """
 
-
     tqdm_options = TQDM_DEFAULT_OPTIONS
     num_generation = 0
     archive = Archive()

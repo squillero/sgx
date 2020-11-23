@@ -35,13 +35,15 @@ from ..utils.random import SGxRandom
 
 from .base import Allele
 
-
 DEFAULT_LEARNING_RATE = .001
+
+
 class Boolean(Allele):
+
     @staticmethod
     def sigmoid(x: float, k: Optional[float] = 1) -> float:
         """Logistic function with given logistic growth (`k`). See https://en.wikipedia.org/wiki/Logistic_function"""
-        return 1/(1+exp(-k*x))
+        return 1 / (1 + exp(-k * x))
 
     def __init__(self, learning_rate: float = DEFAULT_LEARNING_RATE):
         self._x = 0
