@@ -52,18 +52,17 @@ for problem_size in tqdm([10, 15, 20], desc="PROBLEM SIZE", position=0, leave=No
         results = results.append(data, ignore_index=True)
 
 results.to_sql(name='base', con='sqlite:///one-max.sqlite3', if_exists='replace')
-sys.exit()
 
-for problem_size in [10, 15, 20]:
+for problem_size in tqdm([10, 15, 20], desc="PROBLEM SIZE", position=0, leave=None):
     fitness_function = sgx.fitness.FitnessFunction(lambda i: sum(i), best_fitness=problem_size, type_=sgx.fitness.Scalar)
-    for lr in tqdm(np.linspace(0.001, 0.999, 20), leave=False):
-        for _ in range(10):
-            data = {'Allele': 'Sigmoid', 'Size': problem_size, 'Learning Rate': lr}
-            genome = sgx.t.Genome([sgx.allele.Boolean() for _ in range(problem_size)])
-            species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-            archive = sgx.algorithms.sg(species, max_generation=None, progress_bar=False)
+    experiments = product(tqdm(np.linspace(0.001, 0.999, 100), leave=False), range(20))
+    for lr, _ in tqdm(list(experiments), position=1, leave=None):
+        data = {'Allele': 'Sigmoid', 'Size': problem_size, 'Learning Rate': lr}
+        genome = sgx.t.Genome([sgx.allele.Boolean() for _ in range(problem_size)])
+        species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
+        archive = sgx.algorithms.sg(species, max_generation=None, progress_bar=False)
 
-            data['Generations'] = archive.items[0].generation
-            results = results.append(data, ignore_index=True)
+        data['Generations'] = archive.items[0].generation
+        results = results.append(data, ignore_index=True)
 
 results.to_sql(name='base', con='sqlite:///one-max.sqlite3', if_exists='append')
