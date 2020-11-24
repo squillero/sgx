@@ -75,5 +75,5 @@ jobs:
       language: shell
 
 script:
-  - python -m pytest
-  - python -OO -m pytest
+  - python3 -m pytest --disable-pytest-warnings
+  - python3 -OO -m pytest --disable-pytest-warnings
