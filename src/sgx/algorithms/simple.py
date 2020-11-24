@@ -48,7 +48,8 @@ TQDM_DEFAULT_OPTIONS = {
     'bar_format': '{n:,} generations in {elapsed} (speed: {rate_fmt})',
     'unit': 'gen',
     'unit_scale': True,
-    'leave': False
+    'leave': False,
+    'dynamic_ncols': True
 }
 
 
@@ -80,7 +81,7 @@ def sg(species: species_.Species,
         bar = None
     elif progress_bar == 'tqdm' or (progress_bar is True and not jupyter_support.is_notebook()):
         bar = tqdm(total=max_generation, **tqdm_options)
-    elif progress_bar == 'notebook' or (progress_bar is True and jupyter_support.is_notebook()):
+    elif progress_bar == 'notebooks' or (progress_bar is True and jupyter_support.is_notebook()):
         bar = tqdm_notebook(total=max_generation, **tqdm_options)
     else:
         assert False, "D'ho!?"

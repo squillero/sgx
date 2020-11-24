@@ -75,4 +75,5 @@ jobs:
       language: shell
 
 script:
-  - pytest
+  - python -m pytest
+  - python -OO -m pytest
