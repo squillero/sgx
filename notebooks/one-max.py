@@ -31,6 +31,7 @@ import sys
 sys.path += ['../src']
 
 from itertools import product
+from math import inf
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -39,29 +40,27 @@ import sgx
 
 results = pd.DataFrame(columns=['Allele', 'Size', 'Learning Rate', 'Generations'])
 
-for problem_size in tqdm([10, 15, 20], desc="PROBLEM SIZE", position=0, leave=None):
+for problem_size in tqdm([10, 20], desc="PROBLEM SIZE", position=0, leave=None, ncols=0):
     fitness_function = sgx.fitness.FitnessFunction(lambda i: sum(i), best_fitness=problem_size, type_=sgx.fitness.Scalar)
-    experiments = product(tqdm(np.linspace(0.001, 0.999, 100), leave=False), range(20))
-    for lr, _ in tqdm(list(experiments), position=1, leave=None):
-        data = {'Allele': 'Sigmoid', 'Size': problem_size, 'Learning Rate': lr}
-        genome = sgx.t.Genome([sgx.allele.Categorical([0, 1]) for _ in range(problem_size)])
+    experiments = product(tqdm(np.linspace(1e-6, 0.2, 50), leave=False), range(20))
+    for lr, _ in tqdm(list(experiments), position=1, leave=None, ncols=0):
+        data = {'Allele': 'Categorical', 'Size': problem_size, 'Learning Rate': lr}
+        genome = sgx.t.Genome([sgx.allele.Categorical([0, 1], learning_rate=lr) for _ in range(problem_size)])
         species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-        archive = sgx.algorithms.sg(species, max_generation=None, progress_bar=False)
-
+        archive = sgx.algorithms.sg(species, max_generation=5000, progress_bar=False)
         data['Generations'] = archive.items[0].generation
         results = results.append(data, ignore_index=True)
 
 results.to_sql(name='base', con='sqlite:///one-max.sqlite3', if_exists='replace')
 
-for problem_size in tqdm([10, 15, 20], desc="PROBLEM SIZE", position=0, leave=None):
+for problem_size in tqdm([10, 20], desc="PROBLEM SIZE", position=0, leave=None, ncols=0):
     fitness_function = sgx.fitness.FitnessFunction(lambda i: sum(i), best_fitness=problem_size, type_=sgx.fitness.Scalar)
-    experiments = product(tqdm(np.linspace(0.001, 0.999, 100), leave=False), range(20))
-    for lr, _ in tqdm(list(experiments), position=1, leave=None):
+    experiments = product(tqdm(np.linspace(1e-6, 0.2, 50), leave=False), range(20))
+    for lr, _ in tqdm(list(experiments), position=1, leave=None, ncols=0):
         data = {'Allele': 'Sigmoid', 'Size': problem_size, 'Learning Rate': lr}
-        genome = sgx.t.Genome([sgx.allele.Boolean() for _ in range(problem_size)])
+        genome = sgx.t.Genome([sgx.allele.Boolean(learning_rate=lr) for _ in range(problem_size)])
         species = sgx.t.Species(genome=genome, fitness_function=fitness_function)
-        archive = sgx.algorithms.sg(species, max_generation=None, progress_bar=False)
-
+        archive = sgx.algorithms.sg(species, max_generation=5000, progress_bar=False)
         data['Generations'] = archive.items[0].generation
         results = results.append(data, ignore_index=True)
 

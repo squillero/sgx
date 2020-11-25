@@ -67,6 +67,7 @@ jobs:
       language: shell
       before_install:
         - choco install python --version 3.8
+        - doskey python3=python
       env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
     - name: "Python 3.7 on macOS"     # Python 3.7.4 running on macOS 10.14.4
