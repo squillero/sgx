@@ -31,24 +31,17 @@
 A population-less EA loosely inspired by a cool interpretation of the Darwinian theory.
 See: https://github.com/squillero/sgx
 
-Copyright © 2020 Giovanni Squillero. Licensed under Apache-2.0.
+Copyright © 2021 Giovanni Squillero. Licensed under Apache-2.0.
 """
 
-__name__ = "sgx"
+__name__ = "Extended Selfish Gene (SGX)"
 __version__ = "0.2.dev2"
-__author__ = "Giovanni Squillero"
-__copyright__ = "Copyright (c) 2020 Giovanni Squillero. Licensed under Apache-2.0."
+__author__ = "Giovanni Squillero", "Alberto Tonda"
+__copyright__ = "Copyright (c) 2021 Giovanni Squillero. Licensed under Apache-2.0."
 
 import sys
 import warnings
 
-from .utils import logging
-from . import allele
-from . import fitness
-from . import algorithms
-from . import t
-
-from .species import Species
 
 sys.stderr.flush()
 sys.stdout.flush()
@@ -69,3 +62,4 @@ if sys.version_info < (3, 6):
 
 sys.stderr.flush()
 sys.stdout.flush()
+
