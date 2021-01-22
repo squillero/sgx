@@ -1,10 +1,10 @@
-Welcome to Extended Selfish Gene's documentation!
-
-
-| :ref:`Introduction`
+**Welcome to Extended Selfish Gene's documentation!**
 
 .. toctree::
    :caption: Contents
+
+.. toctree::
+   :caption: About Sgx
    :maxdepth: 4
 
    about_sgx.rst
@@ -18,7 +18,7 @@ Welcome to Extended Selfish Gene's documentation!
    fitness.rst
 
 .. toctree::
-   :caption: API reference
+   :caption: Class Organization
    :maxdepth: 4
 
    class_organization.rst
@@ -36,5 +36,3 @@ Welcome to Extended Selfish Gene's documentation!
 
    contributors.rst
    terminology.rst
-
-| :ref:`Credits`

@@ -1,14 +1,10 @@
-""""""""""""""""""
-Class Organization
-""""""""""""""""""
-
 """"""
 Allele
 """"""
 
 .. toctree::
-    :caption: Allele
-    :maxdepth: 4
+   :caption: Allele
+   :maxdepth: 4
 
 
 Base Allele class
@@ -17,7 +13,7 @@ Base Allele class
 :mod:`sgx.allele.base`
 
 .. automodule:: sgx.allele.base
-    :members:
+   :members:
 
 Boolean Allele class
 ====================
@@ -25,7 +21,7 @@ Boolean Allele class
 :mod:`sgx.allele.boolean`
 
 .. automodule:: sgx.allele.boolean
-    :members:
+   :members:
 
 Categorical Allele class
 ========================
@@ -33,8 +29,7 @@ Categorical Allele class
 :mod:`sgx.allele.categorical`
 
 .. automodule:: sgx.allele.categorical
-    :members:
-
+   :members:
 
 --------------------------------
 
@@ -43,8 +38,8 @@ Fitness
 """""""
 
 .. toctree::
-    :caption: Fitness
-    :maxdepth: 4
+   :caption: Fitness
+   :maxdepth: 4
 
 
 Base fitness class
@@ -53,7 +48,7 @@ Base fitness class
 :mod:`sgx.fitness.base`
 
 .. automodule:: sgx.fitness.base
-    :members:
+   :members:
 
 Fitness Function class
 ======================
@@ -61,10 +56,10 @@ Fitness Function class
 :mod:`sgx.fitness.function`
 
 .. automodule:: sgx.fitness.function
-    :classes:
-    :methods:
-    :modules:
-    :members:
+   :classes:
+   :methods:
+   :modules:
+   :members:
 
 ---------------------------
 
@@ -74,7 +69,7 @@ Multi-Objective class
 :mod:`sgx.fitness.multi_objective`
 
 .. automodule:: sgx.fitness.multi_objective
-    :members:
+   :members:
 
 ----------------------------
 
@@ -84,7 +79,7 @@ Simple class
 :mod:`sgx.fitness.simple`
 
 .. automodule:: sgx.fitness.simple
-    :members:
+   :members:
 
 -------------------------
 
@@ -93,8 +88,8 @@ Utils
 """""
 
 .. toctree::
-    :caption: Utils
-    :maxdepth: 4
+   :caption: Utils
+   :maxdepth: 4
 
 CPU_time
 ========
@@ -102,7 +97,7 @@ CPU_time
 :mod:`sgx.utils.cpu_time`
 
 .. automodule:: sgx.utils.cpu_time
-    :members:
+   :members:
 
 Jupyter Support
 ===============
@@ -110,7 +105,7 @@ Jupyter Support
 :mod:`sgx.utils.jupyter_support`
 
 .. automodule:: sgx.utils.jupyter_support
-    :members:
+   :members:
 
 Logging
 =======
@@ -118,7 +113,7 @@ Logging
 :mod:`sgx.utils.logging`
 
 .. automodule:: sgx.utils.logging
-    :members:
+   :members:
 
 Random class
 ============
@@ -126,7 +121,7 @@ Random class
 :mod:`sgx.utils.random`
 
 .. automodule:: sgx.utils.random
-    :members:
+   :members:
 
 
 Archive class
@@ -135,7 +130,10 @@ Archive class
 :mod:`sgx.archive`
 
 .. automodule:: sgx.archive
-    :members:
+   :imported-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Base class
 ==========
@@ -143,7 +141,7 @@ Base class
 :mod:`sgx.base`
 
 .. automodule:: sgx.base
-    :members:
+   :members:
 
 Species class
 =============
@@ -151,7 +149,7 @@ Species class
 :mod:`sgx.species`
 
 .. automodule:: sgx.species
-    :members:
+   :members:
 
 ----------------------
 
@@ -160,8 +158,8 @@ SGX Algorithm
 """""""""""""
 
 .. toctree::
-    :caption: Algorithm
-    :maxdepth: 4
+   :caption: Algorithm
+   :maxdepth: 4
 
 
 Simple Algorithm class
@@ -170,7 +168,7 @@ Simple Algorithm class
 :mod:`sgx.algorithms.simple`
 
 .. automodule:: sgx.algorithms.simple
-    :members:
+   :members:
 
 -------------------------
 

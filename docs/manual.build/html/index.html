@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; Extended Selfish Gene (SGX) </title>
+  <title>&lt;no title&gt; &mdash; The Extended Selfish Gene</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -40,7 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="What is SGX?" href="about_sgx.html" /> 
+    <link rel="next" title="Introduction" href="about_sgx.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -54,7 +55,7 @@
           
 
           
-            <a href="#" class="icon icon-home" alt="Documentation Home"> Extended Selfish Gene (SGX)
+            <a href="#" class="icon icon-home" alt="Documentation Home"> The Extended Selfish Gene
           
 
           
@@ -65,6 +66,10 @@
 
           
             
+            
+              <div class="version">
+                1.0
+              </div>
             
           
 
@@ -88,21 +93,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">About Sgx</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">What is SGX?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html#audience">Audience</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/squillero/sgx">Developer repository</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="instructions.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness Function</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API reference</span></p>
+<p class="caption"><span class="caption-text">Class Organization</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Class Organization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html#allele">Allele</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Allele</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#fitness">Fitness</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#utils">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#sgx-algorithm">SGX Algorithm</a></li>
@@ -116,6 +119,7 @@
 <p class="caption"><span class="caption-text">Appendixes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terminology.html">Appendix - Terms</a></li>
 </ul>
 
             
@@ -131,7 +135,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Extended Selfish Gene (SGX)</a>
+          <a href="#">The Extended Selfish Gene</a>
         
       </nav>
 
@@ -179,15 +183,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>Welcome to Extended Selfish Gene’s documentation!</p>
-<div class="line-block">
-<div class="line"><span class="xref std std-ref">Introduction</span></div>
+  <p><strong>Welcome to Extended Selfish Gene’s documentation!</strong></p>
+<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents</span></p>
+<p class="caption"><span class="caption-text">About Sgx</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">What is SGX?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html#audience">Audience</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about_sgx.html#what-is-sgx">What is SGX?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_sgx.html#audience">Audience</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/squillero/sgx">Developer repository</a></li>
 </ul>
 </div>
@@ -195,23 +201,21 @@
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="instructions.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="instructions.html#source-code">Source Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="instructions.html#importance-of-foss">Importance of FOSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instructions.html#source-code">Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instructions.html#importance-of-foss">Importance of FOSS</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fitness.html#how-do-we-handle-a-different-scenario-including-moea">How do we handle a different scenario (including MOEA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness Function</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fitness.html#how-do-we-handle-a-different-scenario">How do we handle a different scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fitness.html#multi-objective-evolutionary-algorithm">Multi-Objective Evolutionary Algorithm</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API reference</span></p>
+<p class="caption"><span class="caption-text">Class Organization</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Class Organization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html#allele">Allele</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Allele</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="class_organization.html#base-allele-class">Base Allele class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_organization.html#boolean-allele-class">Boolean Allele class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_organization.html#categorical-allele-class">Categorical Allele class</a></li>
@@ -247,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="authors.html#id1">Giovanni Squillero</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authors.html#id2">Alberto Tonda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#id3">Stella Stakiadi</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -256,10 +261,8 @@
 <p class="caption"><span class="caption-text">Appendixes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terminology.html">Appendix - Terms</a></li>
 </ul>
-</div>
-<div class="line-block">
-<div class="line"><span class="xref std std-ref">Credits</span></div>
 </div>
 
 
@@ -270,7 +273,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="about_sgx.html" class="btn btn-neutral float-right" title="What is SGX?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="about_sgx.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

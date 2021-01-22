@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; Extended Selfish Gene (SGX) </title>
+  <title>Installation &mdash; The Extended Selfish Gene</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -40,8 +41,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Fitness" href="fitness.html" />
-    <link rel="prev" title="What is SGX?" href="about_sgx.html" /> 
+    <link rel="next" title="Fitness Function" href="fitness.html" />
+    <link rel="prev" title="Introduction" href="about_sgx.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -55,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Extended Selfish Gene (SGX)
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> The Extended Selfish Gene
           
 
           
@@ -66,6 +67,10 @@
 
           
             
+            
+              <div class="version">
+                1.0
+              </div>
             
           
 
@@ -89,27 +94,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">About Sgx</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">What is SGX?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html#audience">Audience</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/squillero/sgx">Developer repository</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#importance-of-foss">Importance of FOSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#importance-of-foss">Importance of FOSS</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness Function</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fitness.html">Fitness</a></li>
-</ul>
-<p class="caption"><span class="caption-text">API reference</span></p>
+<p class="caption"><span class="caption-text">Class Organization</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Class Organization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html#allele">Allele</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Allele</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#fitness">Fitness</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#utils">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#sgx-algorithm">SGX Algorithm</a></li>
@@ -123,6 +124,7 @@
 <p class="caption"><span class="caption-text">Appendixes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terminology.html">Appendix - Terms</a></li>
 </ul>
 
             
@@ -138,7 +140,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Extended Selfish Gene (SGX)</a>
+          <a href="index.html">The Extended Selfish Gene</a>
         
       </nav>
 
@@ -188,6 +190,8 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>SGX is available as a <a class="reference external" href="https://en.wikipedia.org/wiki/Python_Package_Index">PyPi package</a> from <a class="reference external" href="https://pypi.org/project/sgx/">https://pypi.org/project/sgx/</a> and installing it is as simple as</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sgx</span>
 </pre></div>
@@ -197,26 +201,25 @@
 </pre></div>
 </div>
 <p>Caveat: on some systems the package manager is <code class="docutils literal notranslate"><span class="pre">pip3</span></code>.</p>
-<div class="section" id="source-code">
-<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="importance-of-foss">
-<h3>Importance of FOSS<a class="headerlink" href="#importance-of-foss" title="Permalink to this headline">¶</a></h3>
-<p>Personal control, customizability and freedom:</p>
+<h2>Importance of FOSS<a class="headerlink" href="#importance-of-foss" title="Permalink to this headline">¶</a></h2>
+<p><strong>Personal control, customizability and freedom:</strong></p>
 <p>Users of FOSS benefit from the Four Essential Freedoms to make unrestricted use of,
 and to study, copy, modify, and redistribute such software with or without modification.
 If they would like to change the functionality of software they can bring about changes to the code and, if they wish,
 distribute such modified versions of the software or often − depending on the software’s decision making model and
 its other users − even push or request such changes to be made via updates to the original software.</p>
-<p>Privacy and security:</p>
+<p><strong>Privacy and security:</strong></p>
 <p>Manufacturers of proprietary, closed-source software are sometimes pressured to building in backdoors or other covert,
 undesired features into their software. Instead of having to trust software vendors,
 users of FOSS can inspect and verify the source code themselves and can put trust on a community of volunteers and users.
 As proprietary code is typically hidden from public view, only the vendors themselves and hackers may be aware
 of any vulnerabilities in them while FOSS involves as many people as possible for exposing bugs quickly.</p>
-<p>Low costs or no costs:</p>
+<p><strong>Low costs or no costs:</strong></p>
 <p>FOSS is often free of charge although donations are often encouraged.
 This also allows users to better test and compare software.</p>
-<p>Quality, collaboration and efficiency:</p>
+<p><strong>Quality, collaboration and efficiency:</strong></p>
 <p>FOSS allows for better collaboration among various parties and individuals with the goal
 of developing the most efficient software for its users or use-cases
 while proprietary software is typically meant to generate profits.
@@ -229,7 +232,6 @@ Before trying to contribute read this paper and this style guide.
 It may be wise to send Giovanni an email [&#64;] before digging into the project.</p>
 </div>
 </div>
-</div>
 
 
            </div>
@@ -239,10 +241,10 @@ It may be wise to send Giovanni an email [&#64;] before digging into the project
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="fitness.html" class="btn btn-neutral float-right" title="Fitness" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fitness.html" class="btn btn-neutral float-right" title="Fitness Function" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="about_sgx.html" class="btn btn-neutral float-left" title="What is SGX?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="about_sgx.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

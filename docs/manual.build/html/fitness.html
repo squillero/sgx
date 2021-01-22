@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Fitness &mdash; Extended Selfish Gene (SGX) </title>
+  <title>Fitness Function &mdash; The Extended Selfish Gene</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -40,7 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Class Organization" href="class_organization.html" />
+    <link rel="next" title="Allele" href="class_organization.html" />
     <link rel="prev" title="Installation" href="instructions.html" /> 
 </head>
 
@@ -55,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Extended Selfish Gene (SGX)
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> The Extended Selfish Gene
           
 
           
@@ -66,6 +67,10 @@
 
           
             
+            
+              <div class="version">
+                1.0
+              </div>
             
           
 
@@ -89,24 +94,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">About Sgx</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">What is SGX?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about_sgx.html#audience">Audience</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_sgx.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/squillero/sgx">Developer repository</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="instructions.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Fitness</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#how-do-we-handle-a-different-scenario-including-moea">How do we handle a different scenario (including MOEA)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fitness Function</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-do-we-handle-a-different-scenario">How do we handle a different scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-objective-evolutionary-algorithm">Multi-Objective Evolutionary Algorithm</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API reference</span></p>
+<p class="caption"><span class="caption-text">Class Organization</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Class Organization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="class_organization.html#allele">Allele</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_organization.html">Allele</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#fitness">Fitness</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#utils">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_organization.html#sgx-algorithm">SGX Algorithm</a></li>
@@ -120,6 +124,7 @@
 <p class="caption"><span class="caption-text">Appendixes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terminology.html">Appendix - Terms</a></li>
 </ul>
 
             
@@ -135,7 +140,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Extended Selfish Gene (SGX)</a>
+          <a href="index.html">The Extended Selfish Gene</a>
         
       </nav>
 
@@ -166,7 +171,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Fitness</li>
+      <li>Fitness Function</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -183,12 +188,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fitness">
-<h1>Fitness<a class="headerlink" href="#fitness" title="Permalink to this headline">¶</a></h1>
-<p>..fintess..?</p>
-<div class="section" id="how-do-we-handle-a-different-scenario-including-moea">
-<h2>How do we handle a different scenario (including MOEA)<a class="headerlink" href="#how-do-we-handle-a-different-scenario-including-moea" title="Permalink to this headline">¶</a></h2>
-<p>….?</p>
+  <div class="section" id="fitness-function">
+<h1>Fitness Function<a class="headerlink" href="#fitness-function" title="Permalink to this headline">¶</a></h1>
+<p>Fitness class also redefines the relational operator in order to handle different types of optimization
+(eg. maximization, minimization) and to provide limited support to more complex scenarios
+(eg. multi-objective optimization).</p>
+<div class="section" id="how-do-we-handle-a-different-scenario">
+<h2>How do we handle a different scenario<a class="headerlink" href="#how-do-we-handle-a-different-scenario" title="Permalink to this headline">¶</a></h2>
+<p>When subclassing, one’s fitness should only redefine ‘is_fitter’, and optionally ‘is_distinguishable’ and ‘is_dominant’;
+‘is_dominant’ must be changed if ‘is_fitter’ is randomized (the result is uncertain).</p>
+<p>The idea of several, different scenarios is the following:</p>
+<p><strong>`a == b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> cannot be distinguished from fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<p><strong>`a != b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> is distinguishable from fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<p><strong>`a &gt; b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> is fitter than fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code>.
+(may not always be the case, see lexicographic)</p>
+<p><strong>`a &gt;= b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> is fitter or not distinguishable from fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<p><strong>`a &lt; b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code> is fitter than fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code>, respectively.
+(may not always be the case, see lexicographic)</p>
+<p><strong>`a &lt;= b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code> is fitter or not distinguishable from fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code>, respectively.</p>
+<p><strong>`a &gt;&gt; b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> dominates fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code> which is a certain case.</p>
+<p><strong>`a &lt;&lt; b`</strong>
+In this case, fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> is dominated by fitness <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code>, accordingly.</p>
+</div>
+<div class="section" id="multi-objective-evolutionary-algorithm">
+<h2>Multi-Objective Evolutionary Algorithm<a class="headerlink" href="#multi-objective-evolutionary-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The problem becomes more interesting in case that there exist more than one characteristic that should be compared in order to decide which individual is “better”.
+It is very important to find rules that describe characteristics with respect to a property of interest.
+The MOEA approach, a method of combining the traditional genetic algorithm (TGA) with the multi-objective method,
+can consider the relation between the parameters and the objective spaces in the same time then explore the optimum solution.
+Our multi-objective evolutionary algorithm uses a ‘helper’ function which can decide the best individual when there are two comparable characteristics.</p>
+<p>This special Multi-Objective scenario can be illustrated with an airplaine ticket purchase.
+Let us consider the example of buying a flight ticket where the price of ticket and travel time are the decision-making criteria.</p>
+<a class="reference internal image-reference" href="_images/airticket.png"><img alt="_images/airticket.png" class="align-center" src="_images/airticket.png" style="width: 400px; height: 200px;" /></a>
+<p>The points A,B,C,D,E and F represent the options for flying between two cities.
+We assume that difference in travel time is due to the waiting time for connecting flight at transit.
+<em>Option A</em> is the most expensive with ticket price of $4000, but with least travel time of 16 hours.
+The cheapest ticket is of $2000 with travel time of 32 hours if one takes flying <em>Option E</em>.
+Here the decision-making process of flight booking is not a single objective of either price or travel time.
+The traveler has few options to choose from with some trade-off between travel time and price.
+If one selects <em>Option B</em> instead of <em>Option A</em>, he will be saving on his ticket price by spending more time on transit.
+Again, if the traveler selects <em>Option D</em> instead of <em>Option E</em>, he has to sell out more money for buying the ticket,
+but he can save a few hours. If someone chooses <em>Option F</em>, he is definitely losing. He can go for <em>Option B</em> at same price with less travel time,
+or <em>Option D</em> of same travel duration at lower price.
+The points A,B,C,D and E are called <em>Pareto Optimal Points</em>, named after the famous Italian economist Vilfredo Pareto.
+They are also called <strong>Non-Dominated</strong> solutions.
+The example of flight options is for a <strong>two-objective optimization</strong>. In multi-objective optimization there can be more than two objectives.</p>
 </div>
 </div>
 
@@ -200,7 +251,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_organization.html" class="btn btn-neutral float-right" title="Class Organization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_organization.html" class="btn btn-neutral float-right" title="Allele" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="instructions.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
