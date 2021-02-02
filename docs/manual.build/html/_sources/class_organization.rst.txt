@@ -6,6 +6,10 @@ Allele
    :caption: Allele
    :maxdepth: 4
 
+An allele can be one of the following types:
+
+- a :mod:`sgx.allele.boolean` which is either "1" or "0".
+- a :mod:`sgx.allele.categorical` (for example "R", "G", "B")
 
 Base Allele class
 =================
@@ -56,9 +60,6 @@ Fitness Function class
 :mod:`sgx.fitness.function`
 
 .. automodule:: sgx.fitness.function
-   :classes:
-   :methods:
-   :modules:
    :members:
 
 ---------------------------
@@ -81,7 +82,7 @@ Simple class
 .. automodule:: sgx.fitness.simple
    :members:
 
--------------------------
+----------------------------
 
 """""
 Utils
@@ -151,29 +152,30 @@ Species class
 .. automodule:: sgx.species
    :members:
 
-----------------------
-
-"""""""""""""
-SGX Algorithm
-"""""""""""""
-
-.. toctree::
-   :caption: Algorithm
-   :maxdepth: 4
-
-
-Simple Algorithm class
-======================
-
-:mod:`sgx.algorithms.simple`
-
-.. automodule:: sgx.algorithms.simple
-   :members:
-
--------------------------
+------------------------
 
 """"""""""""""""""""""""
 Modular Design Rationale
 """"""""""""""""""""""""
 
-...?
+**Object-oriented programming (OOP)** is based on the concept of "objects", which can contain data and code:
+data in the form of field, and code, in the form of procedures (often known as methods).
+A feature of objects is that an object's own procedures can access and often modify the data fields of itself.
+In OOP, computer programs are designed by making them out of objects that interact with one another.
+
+Python language is a multi-paradigm and supports object-oriented programming to a greater degree, typically
+in combination with imperative, procedural programming.
+
++---------------------------------------------------------------------+
+|                     Extended Selfish Gene Optimizer                 |
++==================================+==================================+
+|            Genotype              |            Fitness               |
++----------------------------------+-----------------+----------------+
+|             Genome               |Single-Objective | Multi-Objective|
++----------------------------------+-----------------+----------------+
+|             Allele               |   -Int          |     -Char      |
++---------------+------------------+   -Float        |     -Float     |
+|    Boolean    |   Categorical    |   -Double       |      etc.      |
++-------+-------+-----+-----+------+                 |                |
+|  -0   |  -1   |  -R |  -G |  -B  |                 |                |
++-------+-------+-----+-----+------+-----------------+----------------+

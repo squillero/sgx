@@ -129,10 +129,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#species-class">Species class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#sgx-algorithm">SGX Algorithm</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#simple-algorithm-class">Simple Algorithm class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="#modular-design-rationale">Modular Design Rationale</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Copyright</span></p>
@@ -142,7 +138,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Appendixes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributors.html">Acknowledgements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terminology.html">Appendix - Terms</a></li>
 </ul>
 
@@ -211,6 +206,11 @@
 <h1>Allele<a class="headerlink" href="#allele" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
+<p>An allele can be one of the following types:</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="#module-sgx.allele.boolean" title="sgx.allele.boolean"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.allele.boolean</span></code></a> which is either “1” or “0”.</p></li>
+<li><p>a <a class="reference internal" href="#module-sgx.allele.categorical" title="sgx.allele.categorical"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.allele.categorical</span></code></a> (for example “R”, “G”, “B”)</p></li>
+</ul>
 <div class="section" id="base-allele-class">
 <h2>Base Allele class<a class="headerlink" href="#base-allele-class" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#module-sgx.allele.base" title="sgx.allele.base"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.allele.base</span></code></a></p>
@@ -519,8 +519,8 @@ change the values appearance.</p>
 </div>
 <div class="section" id="fitness-function-class">
 <h2>Fitness Function class<a class="headerlink" href="#fitness-function-class" title="Permalink to this headline">¶</a></h2>
-<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.fitness.function</span></code></p>
-</div>
+<p><a class="reference internal" href="#module-sgx.fitness.function" title="sgx.fitness.function"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.fitness.function</span></code></a></p>
+<span class="target" id="module-sgx.fitness.function"></span></div>
 <hr class="docutils" />
 <div class="section" id="multi-objective-class">
 <h2>Multi-Objective class<a class="headerlink" href="#multi-objective-class" title="Permalink to this headline">¶</a></h2>
@@ -864,19 +864,58 @@ paranoia checks are not supposed to be used in production environments
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="sgx-algorithm">
-<h1>SGX Algorithm<a class="headerlink" href="#sgx-algorithm" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<div class="section" id="simple-algorithm-class">
-<h2>Simple Algorithm class<a class="headerlink" href="#simple-algorithm-class" title="Permalink to this headline">¶</a></h2>
-<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">sgx.algorithms.simple</span></code></p>
-</div>
-</div>
-<hr class="docutils" />
 <div class="section" id="modular-design-rationale">
 <h1>Modular Design Rationale<a class="headerlink" href="#modular-design-rationale" title="Permalink to this headline">¶</a></h1>
-<p>…?</p>
+<p><strong>Object-oriented programming (OOP)</strong> is based on the concept of “objects”, which can contain data and code:
+data in the form of field, and code, in the form of procedures (often known as methods).
+A feature of objects is that an object’s own procedures can access and often modify the data fields of itself.
+In OOP, computer programs are designed by making them out of objects that interact with one another.</p>
+<p>Python language is a multi-paradigm and supports object-oriented programming to a greater degree, typically
+in combination with imperative, procedural programming.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 10%" />
+<col style="width: 27%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="7"><p>Extended Selfish Gene Optimizer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="5"><p>Genotype</p></td>
+<td colspan="2"><p>Fitness</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>Genome</p></td>
+<td><p>Single-Objective</p></td>
+<td><p>Multi-Objective</p></td>
+</tr>
+<tr class="row-even"><td colspan="5"><p>Allele</p></td>
+<td rowspan="3"><p>-Int
+-Float
+-Double</p></td>
+<td rowspan="3"><p>-Char
+-Float</p>
+<blockquote>
+<div><p>etc.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Boolean</p></td>
+<td colspan="3"><p>Categorical</p></td>
+</tr>
+<tr class="row-even"><td><p>-0</p></td>
+<td><p>-1</p></td>
+<td><p>-R</p></td>
+<td><p>-G</p></td>
+<td><p>-B</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
