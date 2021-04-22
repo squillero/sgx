@@ -6,8 +6,11 @@
 # /_________/\________/___/\  \  https://github.com/squillero/sgx           #
 #                           \_/                                             #
 #                                                                           #
-# Copyright © 2020 Giovanni Squillero  --  Licensed under Apache-2.0        #
+# A quick 'n dirty versatile population-less evolutionary optimizer loosely #
+# inspired by a cool interpretation of the Darwinian theory.                #
 #                                                                           #
+#############################################################################
+# Copyright © 2021 Giovanni Squillero. Licensed under the EUPL-1.2.
 #############################################################################
 
 # Enable build config validation
@@ -24,6 +27,10 @@ install:
   - pip3 install --upgrade pytest
   - pip3 install . || pip3 install --user .
   - pip3 install --upgrade coloredlogs psutil
+
+script:
+  - python3 -m pytest --disable-pytest-warnings
+  - python3 -OO -m pytest --disable-pytest-warnings
 
 jobs:
   include:
@@ -62,19 +69,21 @@ jobs:
       python: nightly
       dist: focal
 
-    - name: "Python 3.8 on Windows"   # Python 3.8.0 running on macOS 10.14.4
-      os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.8
-        - doskey python3=python $*
-      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-
     - name: "Python 3.7 on macOS"     # Python 3.7.4 running on macOS 10.14.4
       os: osx
       osx_image: xcode11.2
       language: shell
+      script:
+        - python3 -m pytest --disable-pytest-warnings
+        - python3 -OO -m pytest --disable-pytest-warnings
 
-script:
-  - python3 -m pytest --disable-pytest-warnings
-  - python3 -OO -m pytest --disable-pytest-warnings
+    - name: "Python 3.8 on Windows"   # Python 3.8.0 running on macOS 10.14.4
+      os: windows
+      language: shell
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      before_install:
+        - choco install python --version 3.8
+      script:
+        - python -m pytest --disable-pytest-warnings
+        - python -OO -m pytest --disable-pytest-warnings
+
