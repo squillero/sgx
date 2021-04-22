@@ -28,7 +28,7 @@
 # limitations under the License.
 
 import random
-from sgx.utils.random import SGxRandom
+from sgx import SGxRandom
 
 
 def test_consistency():

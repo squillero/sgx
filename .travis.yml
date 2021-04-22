@@ -25,6 +25,10 @@ install:
   - pip3 install . || pip3 install --user .
   - pip3 install --upgrade coloredlogs psutil
 
+script:
+  - python3 -m pytest --disable-pytest-warnings
+  - python3 -OO -m pytest --disable-pytest-warnings
+
 jobs:
   include:
     - name: "Python 3.6 on Ubuntu 16.04"
@@ -80,6 +84,3 @@ jobs:
         - python -m pytest --disable-pytest-warnings
         - python -OO -m pytest --disable-pytest-warnings
 
-script:
-  - python3 -m pytest --disable-pytest-warnings
-  - python3 -OO -m pytest --disable-pytest-warnings
