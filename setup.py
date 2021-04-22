@@ -11,26 +11,13 @@
 # inspired by a cool interpretation of the Darwinian theory.                #
 #                                                                           #
 #############################################################################
-
-# Copyright 2020 Giovanni Squillero
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not
-# use this file except in compliance with the License.
-# You may obtain a copy of the License at:
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Copyright © 2021 Giovanni Squillero. Licensed under the EUPL 1.2.
+#############################################################################
 
 import setuptools
 from sgx import __name__, __version__
 
-with open('pypi-description.md', 'r', encoding='utf-8') as fh:
+with open('extras/pypi-description.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 OPTIONAL = ['coloredlogs', 'matplotlib', 'psutil']
@@ -42,7 +29,7 @@ setuptools.setup(
     version=__version__,
     author="Giovanni Squillero",
     author_email="squillero@polito.it",
-    license="Apache-2.0",
+    #license="European Union Public Licence 1.2 (EUPL 1.2)",
     description="A population-less EA loosely inspired by a cool interpretation of the Darwinian theory",
     long_description=long_description,
     #long_description_content_type="text/x-rst",
@@ -65,7 +52,7 @@ setuptools.setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Scientific/Engineering :: Mathematics",
-        "License :: OSI Approved :: Apache Software License"
+        "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)"
     ],
     install_requires=requirements,
 )
