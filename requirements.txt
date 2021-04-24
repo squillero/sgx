@@ -1,3 +1,6 @@
 tqdm>=4.5
 coloredlogs>=14
+scipy>=1.6
+numpy>=1.20
+pandas>=1.2
 #psutil>=5.7

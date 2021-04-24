@@ -41,6 +41,7 @@ __copyright__ = "Copyright © 2021 Giovanni Squillero. Licensed under Apache-2.0
 import sys
 import warnings
 
+import randy
 from .utils import logging
 from . import allele
 from . import fitness
