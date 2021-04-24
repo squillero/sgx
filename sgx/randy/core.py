@@ -7,7 +7,7 @@
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
+# ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy
 
 from typing import Optional, Sequence, List, Any
@@ -19,7 +19,7 @@ from scipy.stats import truncnorm
 
 
 class Randy:
-    """Random number generators for EA applications."""
+    """Reproducible random numbers for EA applications."""
 
     SMALL_NUMBER = 1e-9
 
