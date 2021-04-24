@@ -34,4 +34,4 @@ This repo is only useful if one wants to hack the code.
 ## Licence
 
 **Copyright © 2021 [Giovanni Squillero](https://staff.polito.it/giovanni.squillero/)**  
-The Extended Selfish Gene (SGX) is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under the [European Union Public Licence](https://choosealicense.com/licenses/eupl-1.2/).
+The Extended Selfish Gene (SGX) is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under the permissive [Apache License 2.0](https://www.tldrlegal.com/l/apache2).
