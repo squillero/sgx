@@ -38,12 +38,12 @@ __version__ = "0.2.dev5"
 __author__ = "Giovanni Squillero"
 __copyright__ = "Copyright © 2021 Giovanni Squillero. Licensed under Apache-2.0."
 
+
 import sys
 import warnings
 
-import randy
 from .utils import logging
-from . import allele
+from . import allele, randy
 from . import fitness
 from . import algorithms
 from . import t

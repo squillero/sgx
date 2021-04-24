@@ -10,7 +10,7 @@
 # ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
 # Project page: https://github.com/squillero/randy
 
-__version__ = '0.1β'
+__version__ = '0.3β'
 __author__ = 'Giovanni Squillero'
 
 from .core import Randy
