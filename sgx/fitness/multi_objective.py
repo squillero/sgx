@@ -29,9 +29,8 @@
 from abc import ABC, abstractmethod
 
 from ..utils import logging
-from ..utils.random import SGxRandom
 from .simple import Vector
-
+from .. import randy
 
 class MultiObjective(Vector, ABC):
     """Abstract class for handling Molti-Objective problems."""
@@ -51,5 +50,5 @@ class Lexicase(MultiObjective):
 
     def is_fitter(self, other: 'Lexicase') -> bool:
         self.check_comparable(other)
-        order = SGxRandom.shuffled(range(len(self._values)))
+        order = randy.shuffled(range(len(self._values)))
         return Vector.compare_vectors([self._values[i] for i in order], [other._values[i] for i in order]) > 0

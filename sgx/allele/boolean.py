@@ -30,8 +30,7 @@ from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose, exp
 
 from ..utils import logging
-from ..utils.random import SGxRandom
-
+from .. import randy
 from .base import Allele
 
 DEFAULT_LEARNING_RATE = .001
@@ -51,9 +50,9 @@ class Boolean(Allele):
 
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Hashable:
         if sample_type == Allele.SAMPLE_TYPE__SAMPLE:
-            return SGxRandom.random() < Boolean.sigmoid(self._x, self._k)
+            return randy.random() < Boolean.sigmoid(self._x, self._k)
         elif sample_type == Allele.SAMPLE_TYPE__UNIFORM:
-            return SGxRandom.random() < .5
+            return randy.random() < .5
         elif sample_type == Allele.SAMPLE_TYPE__MODE:
             self._x > 0
         else:

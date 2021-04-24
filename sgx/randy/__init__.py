@@ -10,6 +10,8 @@
 # ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
 # Project page: https://github.com/squillero/randy
 
+"""A fiddling wrapper over serious random packages, tweaked for use in EAs."""
+
 __version__ = '0.3β'
 __author__ = 'Giovanni Squillero'
 

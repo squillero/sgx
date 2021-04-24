@@ -30,7 +30,6 @@ from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose
 
 from ..utils import logging
-from ..utils.random import SGxRandom
 
 from .base import Allele
 
@@ -72,9 +71,9 @@ class Categorical(Allele):
 
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Hashable:
         if sample_type == Allele.SAMPLE_TYPE__SAMPLE:
-            return SGxRandom.choice(self._alternatives, weights=self._weights)
+            return randy.choice(self._alternatives, weights=self._weights)
         elif sample_type == Allele.SAMPLE_TYPE__UNIFORM:
-            return SGxRandom.choice(self._alternatives, weights=None)
+            return randy.choice(self._alternatives, weights=None)
         elif sample_type == Allele.SAMPLE_TYPE__MODE:
             return self._alternatives[self._weights.index(max(self._weights))]
         else:

@@ -10,7 +10,7 @@
 # ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
 # Project page: https://github.com/squillero/randy
 
-from typing import Optional, Sequence, Any
+from typing import Optional, Sequence, List, Any
 import warnings
 import math
 import logging
@@ -48,7 +48,6 @@ class Randy:
     @staticmethod
     def _strength_to_sigma(strength: float):
         """Stretches [0,1] on a standard deviation ]0, 20.8[."""
-
         assert 0 <= strength <= 1, "Invalid sigma (must be [0, 1])"
         x = strength / 2 + .5
         x = min(x, 1 - Randy.SMALL_NUMBER)
@@ -60,7 +59,6 @@ class Randy:
 
     def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None):
         """Returns a value in [a, b] by perturbating loc with a given strength."""
-
         self._calls += 1
         assert a <= b, "a must precede b"
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
@@ -68,7 +66,6 @@ class Randy:
             loc is not None and
             strength is not None), "loc and strength should be specified together (either both or neither)"
         assert loc is None or a <= loc <= b, "loc must be in [a, b]"
-
         if strength is None:
             val = self._generator.random()
             val = val * (b - a) + a
@@ -86,14 +83,12 @@ class Randy:
 
     def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None) -> Any:
         """Returns a random element from seq by perturbating index loc with a given strength."""
-
         self._calls += 1
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
             loc is not None and
             strength is not None), "loc and strength should be specified together (either both or neither)"
         assert loc is None or 0 <= loc < len(seq), "loc must be a valid index of seq"
-
         if strength == 1 or strength is None:
             return self._generator.choice(seq)
         elif strength == 0:
@@ -103,12 +98,11 @@ class Randy:
             return seq[int(i)]
 
     def choice(self, seq: Sequence[Any]):
-        """Returns a random element from seq"""
+        """Returns a random element from seq."""
         return self.sigma_choice(seq, loc=None, strength=None)
 
     def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
         """Returns a boolean value with the given probability."""
-
         self._calls += 1
         assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]."
         assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]."
@@ -117,7 +111,6 @@ class Randy:
         elif p_true is None and p_false is not None:
             p_true = 1-p_false
         assert math.isclose(p_true+p_false, 1), "p_true + p_false must be equal to 1."
-
         return self._generator.random() < p_true
 
     def randint(self, a, b):
@@ -126,5 +119,12 @@ class Randy:
         r = self._generator.random() * (b - a + 1) + a
         return int(r)
 
-    def shuffle(self, seq: Sequence[Any]) -> None:
+    def shuffle(self, seq: List[Any]) -> None:
+        """Shuffle list x in place, and return None."""
         self._generator.shuffle(seq)
+
+    def shuffle(self, seq: Sequence[Any]) -> None:
+        """Returns a shuffled list with the element of seq."""
+        y = list(seq)
+        self.shuffle(y)
+        return y

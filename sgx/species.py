@@ -29,8 +29,8 @@
 from typing import Tuple, Sequence, Any, Callable, Optional, Hashable, Union
 
 from .utils import logging
+from . import randy
 from .fitness import FitnessFunction
-from .utils.random import SGxRandom
 from .base import Genome, Genotype
 from .allele.base import Allele
 from .fitness.base import Fitness
@@ -61,7 +61,7 @@ class Species:
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Genotype:
         genotype = list()
         for a in self._genome:
-            if SGxRandom.random() < self._mutation_rate:
+            if randy.random() < self._mutation_rate:
                 genotype.append(a.sample(sample_type='uniform'))
             else:
                 genotype.append(a.sample(sample_type='sample'))
