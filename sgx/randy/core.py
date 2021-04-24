@@ -104,7 +104,7 @@ class Randy:
         assert len(seq) == len(p), "seq and weight must contain the same number of elements"
         assert math.isclose(sum(p), 1), "weights must sum to 1"
         r = self._generator.random()
-        return next(val for val, cp in ((v, sum(p[0:i+1])) for i, v in enumerate(seq)) if cp >= r)
+        return next(val for val, cp in ((v, sum(p[0:i + 1])) for i, v in enumerate(seq)) if cp >= r)
 
     def choice(self, seq: Sequence[Any], p: Optional[float] = None):
         """Returns a random element from seq, possibly using probabilities in p."""
@@ -135,7 +135,7 @@ class Randy:
         """Shuffle list x in place, and return None."""
         self._generator.shuffle(seq)
 
-    def shuffle(self, seq: Sequence[Any]) -> None:
+    def shuffled(self, seq: Sequence[Any]) -> None:
         """Returns a shuffled list with the element of seq."""
         y = list(seq)
         self.shuffle(y)

@@ -13,13 +13,13 @@
 #############################################################################
 
 # Copyright 2021 Giovanni Squillero
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@ from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose
 
 from ..utils import logging
-
+from .. import randy
 from .base import Allele
 
 
@@ -71,9 +71,9 @@ class Categorical(Allele):
 
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Hashable:
         if sample_type == Allele.SAMPLE_TYPE__SAMPLE:
-            return randy.choice(self._alternatives, weights=self._weights)
+            return randy.choice(self._alternatives, p=self._weights)
         elif sample_type == Allele.SAMPLE_TYPE__UNIFORM:
-            return randy.choice(self._alternatives, weights=None)
+            return randy.choice(self._alternatives, p=None)
         elif sample_type == Allele.SAMPLE_TYPE__MODE:
             return self._alternatives[self._weights.index(max(self._weights))]
         else:

@@ -10,7 +10,9 @@
 # ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy
 
-__all__ = ['boolean', 'choice', 'random', 'sigma_choice', 'sigma_random', 'randint', 'shuffle']
+__all__ = [
+    'boolean', 'choice', 'randint', 'random', 'shuffle', 'shuffled', 'sigma_choice', 'sigma_random', 'weighted_choice'
+]
 
 import logging
 from .core import Randy

@@ -13,13 +13,13 @@
 #############################################################################
 
 # Copyright 2021 Giovanni Squillero
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,8 +52,9 @@ class Boolean(Allele):
         if sample_type == Allele.SAMPLE_TYPE__SAMPLE:
             return randy.random() < Boolean.sigmoid(self._x, self._k)
         elif sample_type == Allele.SAMPLE_TYPE__UNIFORM:
-            return randy.random() < .5
+            return randy.boolean()
         elif sample_type == Allele.SAMPLE_TYPE__MODE:
+            # TODO: wtf?
             self._x > 0
         else:
             assert sample_type in Allele.VALID_SAMPLE_TYPES, f"Unknown sample type: {sample_type!r} vs. {Allele.VALID_SAMPLE_TYPES}"
