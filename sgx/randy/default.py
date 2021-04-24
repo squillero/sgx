@@ -20,7 +20,7 @@ try:
     __the_ram
     assert False, f"Panik: Randy the Ram has already be initialized: {__the_ram!r}"
 except NameError:
-    __the_ram = Randy('None')   # 'None' is like None, but w/o warning
+    __the_ram = Randy('None')  # 'None' is like None, but w/o warning
     logging.debug(f"Initialized Randy the Ram: {__the_ram!r}")
 
 
@@ -40,6 +40,12 @@ def sigma_random(*args, **kwargs):
     """Call sigma_random with the default random generator."""
     logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
     return __the_ram.sigma_random(*args, **kwargs)
+
+
+def weighted_choice(*args, **kwargs):
+    """Call weighted_choice with the default random generator."""
+    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
+    return __the_ram.weighted_choice(*args, **kwargs)
 
 
 def choice(*args, **kwargs):

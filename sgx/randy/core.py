@@ -19,13 +19,15 @@ from scipy.stats import truncnorm
 
 
 class Randy:
-    """Reproducible random numbers for EA applications."""
+    """Safe, reproducible random numbers for EA applications."""
 
     SMALL_NUMBER = 1e-9
 
     def __init__(self, seed: Optional[Any] = 42) -> None:
         if seed is None:
-            warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.", RuntimeWarning, stacklevel=2)
+            warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.",
+                          RuntimeWarning,
+                          stacklevel=2)
         elif seed == 'None':
             # like None, but without a runtime warning ;-)
             seed = None
@@ -94,12 +96,22 @@ class Randy:
         elif strength == 0:
             return seq[loc]
         else:
-            i = self.sigma_random(0, len(seq)-Randy.SMALL_NUMBER, loc=loc+.5, strength=strength)
+            i = self.sigma_random(0, len(seq) - Randy.SMALL_NUMBER, loc=loc + .5, strength=strength)
             return seq[int(i)]
 
-    def choice(self, seq: Sequence[Any]):
-        """Returns a random element from seq."""
-        return self.sigma_choice(seq, loc=None, strength=None)
+    def weighted_choice(self, seq: Sequence[Any], p: Sequence[float]):
+        """Returns a random element from seq using the probabilities in p."""
+        assert len(seq) == len(p), "seq and weight must contain the same number of elements"
+        assert math.isclose(sum(p), 1), "weights must sum to 1"
+        r = self._generator.random()
+        return next(val for val, cp in ((v, sum(p[0:i+1])) for i, v in enumerate(seq)) if cp >= r)
+
+    def choice(self, seq: Sequence[Any], p: Optional[float] = None):
+        """Returns a random element from seq, possibly using probabilities in p."""
+        if p is None:
+            return self._generator.choice(seq)
+        else:
+            return self.weighted_choice(seq, p)
 
     def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
         """Returns a boolean value with the given probability."""
@@ -109,8 +121,8 @@ class Randy:
         if p_true is None and p_false is None:
             p_true = .5
         elif p_true is None and p_false is not None:
-            p_true = 1-p_false
-        assert math.isclose(p_true+p_false, 1), "p_true + p_false must be equal to 1."
+            p_true = 1 - p_false
+        assert math.isclose(p_true + p_false, 1), "p_true + p_false must be equal to 1."
         return self._generator.random() < p_true
 
     def randint(self, a, b):
