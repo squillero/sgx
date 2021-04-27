@@ -34,7 +34,7 @@ Copyright © 2021 Giovanni Squillero. Licensed under Apache-2.0.
 """
 
 __name__ = "sgx"
-__version__ = "0.2.dev5"
+__version__ = "0.3.dev1"
 __author__ = "Giovanni Squillero"
 __copyright__ = "Copyright © 2021 Giovanni Squillero. Licensed under Apache-2.0."
 
@@ -46,6 +46,7 @@ from . import allele, randy
 from . import fitness
 from . import algorithms
 from . import t
+from . import randy
 
 from .species import Species
 
@@ -68,3 +69,6 @@ if sys.version_info < (3, 6):
 
 sys.stderr.flush()
 sys.stdout.flush()
+
+# Initialize random generators
+r = randy.Randy('None')
