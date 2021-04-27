@@ -26,8 +26,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sgx import randy
-
 
 def test_choice():
     for _ in range(10000):

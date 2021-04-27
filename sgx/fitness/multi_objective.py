@@ -30,7 +30,6 @@ from abc import ABC, abstractmethod
 
 from ..utils import logging
 from .simple import Vector
-from .. import randy
 
 
 class MultiObjective(Vector, ABC):

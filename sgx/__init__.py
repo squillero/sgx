@@ -46,7 +46,6 @@ from . import allele, randy
 from . import fitness
 from . import algorithms
 from . import t
-from . import randy
 
 from .species import Species
 
@@ -69,6 +68,3 @@ if sys.version_info < (3, 6):
 
 sys.stderr.flush()
 sys.stdout.flush()
-
-# Initialize random generators
-r = randy.Randy('None')

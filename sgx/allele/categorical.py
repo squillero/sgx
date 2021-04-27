@@ -30,7 +30,6 @@ from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
 from math import isclose
 
 from ..utils import logging
-from .. import randy
 from .base import Allele
 
 

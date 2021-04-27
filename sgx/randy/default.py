@@ -15,66 +15,65 @@ __all__ = [
 ]
 
 import logging
+from typing import Optional, Any
+import numpy as np
+
 from .core import Randy
 
 try:
     # Ok, I may admit it's a little bit paranoid...
-    __the_ram
-    assert False, f"Panic: Randy the Ram has already be initialized: {__the_ram!r}"
+    _default_generator
+    assert False, f"Panic: The default random generator has already be initialized: {_default_generator!r}"
 except NameError:
-    __the_ram = Randy('None')  # 'None' is like None, but w/o warning
-    logging.debug(f"Initialized Randy the Ram: {__the_ram!r}")
+    _default_generator = Randy(None, croak=False)  # None, but w/o warning
+    logging.debug(f"Initialized Randy: {_default_generator!r}")
+
+
+def seed(new_seed: Optional[Any] = None) -> None:
+    global _default_generator
+    _default_generator = np.random.default_rng(new_seed)
 
 
 def boolean(*args, **kwargs):
     """Call boolean with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.boolean(*args, **kwargs)
+    return _default_generator.boolean(*args, **kwargs)
 
 
 def random(*args, **kwargs):
     """Call random with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.random(*args, **kwargs)
+    return _default_generator.random(*args, **kwargs)
 
 
 def sigma_random(*args, **kwargs):
     """Call sigma_random with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.sigma_random(*args, **kwargs)
+    return _default_generator.sigma_random(*args, **kwargs)
 
 
 def weighted_choice(*args, **kwargs):
     """Call weighted_choice with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.weighted_choice(*args, **kwargs)
+    return _default_generator.weighted_choice(*args, **kwargs)
 
 
 def sigma_choice(*args, **kwargs):
     """Call sigma_choice with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.sigma_choice(*args, **kwargs)
+    return _default_generator.sigma_choice(*args, **kwargs)
 
 
 def choice(*args, **kwargs):
     """Call choice with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.choice(*args, **kwargs)
+    return _default_generator.choice(*args, **kwargs)
 
 
 def randint(*args, **kwargs):
     """Call randint with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.randint(*args, **kwargs)
+    return _default_generator.randint(*args, **kwargs)
 
 
 def shuffle(*args, **kwargs):
     """Call shuffle with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.shuffle(*args, **kwargs)
+    return _default_generator.shuffle(*args, **kwargs)
 
 
 def shuffled(*args, **kwargs):
     """Call shuffled with the default random generator."""
-    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
-    return __the_ram.shuffled(*args, **kwargs)
+    return _default_generator.shuffled(*args, **kwargs)

@@ -28,7 +28,10 @@
 
 __all__ = ['sg']
 
-from typing import Optional, Callable, Union
+from typing import Optional, Callable, Union, Any
+
+import sgx
+
 try:
     from tqdm import tqdm
 except:
@@ -54,6 +57,7 @@ TQDM_DEFAULT_OPTIONS = {
 
 def sg(species: species_.Species,
        max_generation: Optional[int] = None,
+       random_seed: Optional[Any] = None,
        progress_bar: Optional[Union[str, bool]] = True):
     """A vanilla optimizer
 
@@ -61,6 +65,7 @@ def sg(species: species_.Species,
     (DOI: 10.1109/ICEC.1998.700092)
     """
 
+    sgx.r = sgx.randy.Randy(random_seed)
     tqdm_options = TQDM_DEFAULT_OPTIONS
     num_generation = 0
     archive = Archive()

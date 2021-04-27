@@ -30,20 +30,11 @@ class Randy:
     def __setstate__(self, state):
         _generator, _calls = state
 
-    def __init__(self, seed: Optional[Any] = 42) -> None:
-        if seed is None:
+    def __init__(self, seed: Optional[Any] = 42, croak: Optional[bool] = True) -> None:
+        if seed is None and croak:
             warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.",
                           RuntimeWarning,
                           stacklevel=2)
-        elif seed == 'None':
-            # like None, but without a runtime warning ;-)
-            seed = None
-        self._generator = np.random.default_rng(seed)
-        self._calls = 0
-
-    def seed(self, seed: Any) -> None:
-        """Force a seed value to the internal generator"""
-        warnings.warn("Setting a seed is deprecated. Create a new RandomWrapper instead.", DeprecationWarning)
         self._generator = np.random.default_rng(seed)
         self._calls = 0
 
