@@ -26,44 +26,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import abc
-from typing import Callable, Any, Optional, Type, Union
-
 import numpy as np
+from scipy.optimize import rosen
+import seaborn as sns
 
-from .base import Fitness
-from .simple import Scalar
-from ..base import Genotype
+import sgx
+import randy
+import matplotlib.pyplot as plt
 
+a = sgx.allele.FloatingPoint(-1, 1, mixture_size=4)
 
-class FitnessFunction(abc.Callable):
-    def __init__(self,
-                 fitness_function: Callable[[Genotype], Any],
-                 type_: Optional[Type[Fitness]] = Type[Scalar],
-                 best_fitness: Optional[Fitness] = None,
-                 cook: Optional[Callable[[Genotype], Any]] = None):
-        if cook is not None:
-            print("hey")
-            self._fitness_function = lambda g: fitness_function(cook(g))
-        else:
-            self._fitness_function = fitness_function
-        if best_fitness:
-            self._fitness_type = type_
-            self._best_fitness = type_(best_fitness)
-        else:
-            self._fitness_type = None
-            self._best_fitness = None
+x = np.linspace(a._interval[0], a._interval[1], 100)
+y = np.zeros(x.shape)
+for f in a._mixture:
+    pdf = randy.get_rvs(f.a, f.b, f.loc, f.scale)
+    t = pdf(x)
+    plt.plot(x, t, ',')
+    y += t / len(a._mixture)
+plt.plot(x, y, 'k-', lw=2)
+plt.show()
 
-    def __call__(self, genotype: Genotype) -> Fitness:
-        print(genotype)
-        print(self._fitness_function)
-        print(self._fitness_function(genotype))
-        return self._fitness_type(self._fitness_function(genotype))
-
-    @property
-    def fitness_type(self):
-        return self._fitness_type
-
-    @property
-    def best_fitness(self):
-        return self._best_fitness
+SAMPLES = 10_000
+r = [a.sample() for _ in range(SAMPLES)]
+#plt.hist(r, density=True, histtype='stepfilled', alpha=0.2)
+sns.histplot(r, bins=50)
+plt.show()

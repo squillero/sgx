@@ -28,3 +28,4 @@
 
 from .categorical import Categorical
 from .boolean import Boolean
+from .floating import FloatingPoint

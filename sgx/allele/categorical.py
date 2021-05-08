@@ -26,23 +26,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional, Sequence, Hashable, Union, Dict, Tuple
+from typing import Optional, Sequence, Hashable, Union, Dict, Tuple, List, Any
 from math import isclose
+
+from .. import randy
 
 from ..utils import logging
 from .base import Allele
 
 
 class Categorical(Allele):
-    DEFAULT_LEARNING_RATE = .001
+
+    _learning_rate: float
+    _alternatives: Tuple[Any]
+    _weights: List[float]
 
     def __init__(self,
                  alternatives: Sequence[Hashable],
                  weights: Optional[Union[Sequence[float], dict]] = None,
-                 learning_rate: Optional[float] = None):
-        if learning_rate is None:
-            learning_rate = Categorical.DEFAULT_LEARNING_RATE
-        assert 0 < learning_rate < 1, f"Learning rate must be ]0, 1[: {learning_rate}"
+                 learning_rate: float = Allele.DEFAULT_LEARNING_RATE):
+        assert 0 < learning_rate < 1, f"Learning rate must be ]0, 1[ (found {learning_rate})"
         alternatives = list(alternatives)
         assert len(alternatives) == len(set(alternatives)), f"Alternatives must be uniques: {alternatives}"
         if weights is None:

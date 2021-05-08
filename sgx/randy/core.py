@@ -10,9 +10,10 @@
 # ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy
 
-from typing import Optional, Sequence, List, Any
-import warnings
 import math
+import warnings
+from typing import Optional, Sequence, List, Any
+
 import numpy as np
 from scipy.stats import truncnorm
 
@@ -49,35 +50,39 @@ class Randy:
         return self.boolean()
 
     @staticmethod
-    def _strength_to_sigma(strength: float) -> float:
+    def _strength_to_sigma(strength: float) -> Optional[float]:
         """Stretches [0,1] on a standard deviation ]0, 20.8[."""
+        if strength is None:
+            return None
         assert 0 <= strength <= 1, "Invalid sigma (must be [0, 1])"
         x = strength / 2 + .5
         x = min(x, 1 - Randy.SMALL_NUMBER)
-
         val = math.log(x / (1 - x))
         if math.isclose(val, 0):
             val = Randy.SMALL_NUMBER
         return val
 
-    def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None) -> Any:
+    def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None) -> float:
         """Returns a value in [a, b] by perturbing loc with a given strength."""
+        return self.scale_random(a, b, loc=loc, scale=Randy._strength_to_sigma(strength))
+
+    def scale_random(self, a: float, b: float, loc: Optional[float] = None, scale: Optional[float] = None) -> float:
+        """Returns a value from a standard normal truncated to [a, b] with mean loc and standard deviation scale."""
         self._calls += 1
         assert a <= b, "a must precede b"
-        assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
-        assert (loc is None and strength is None) or (
-            loc is not None and
-            strength is not None), "loc and strength should be specified together (either both or neither)"
+        assert scale is None or 0 <= scale <= 1, "strength must be in [0, 1]"
+        assert (loc is None and scale is None) or (
+                loc is not None and
+                scale is not None), "loc and strength should be specified together (either both or neither)"
         assert loc is None or a <= loc <= b, "loc must be in [a, b]"
-        if strength is None:
+        if scale is None:
             val = self._generator.random()
             val = val * (b - a) + a
-        elif strength == 0:
+        elif scale == 0:
             val = loc
         else:
-            std = Randy._strength_to_sigma(strength)
-            clip_a, clip_b = (a - loc) / std, (b - loc) / std
-            val = truncnorm.rvs(clip_a, clip_b, loc=loc, scale=std, random_state=self._generator)
+            clip_a, clip_b = (a - loc) / scale, (b - loc) / scale
+            val = truncnorm.rvs(clip_a, clip_b, loc=loc, scale=scale, random_state=self._generator)
         return val
 
     def random(self, a: Optional[float] = 0, b: Optional[float] = 1) -> float:

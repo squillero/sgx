@@ -28,7 +28,8 @@
 
 from typing import Tuple, Sequence, Any, Callable, Optional, Hashable, Union
 
-from . import r as randy
+from . import randy
+
 from .utils import logging
 from .fitness import FitnessFunction
 from .base import Genome, Genotype
