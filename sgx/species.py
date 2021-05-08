@@ -13,13 +13,13 @@
 #############################################################################
 
 # Copyright 2021 Giovanni Squillero
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,9 +28,10 @@
 
 from typing import Tuple, Sequence, Any, Callable, Optional, Hashable, Union
 
+from . import randy
+
 from .utils import logging
 from .fitness import FitnessFunction
-from .utils.random import SGxRandom
 from .base import Genome, Genotype
 from .allele.base import Allele
 from .fitness.base import Fitness
@@ -61,7 +62,7 @@ class Species:
     def sample(self, sample_type: Optional[str] = Allele.DEFAULT_SAMPLE_TYPE) -> Genotype:
         genotype = list()
         for a in self._genome:
-            if SGxRandom.random() < self._mutation_rate:
+            if randy.random() < self._mutation_rate:
                 genotype.append(a.sample(sample_type='uniform'))
             else:
                 genotype.append(a.sample(sample_type='sample'))

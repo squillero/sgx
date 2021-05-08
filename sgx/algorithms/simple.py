@@ -13,13 +13,13 @@
 #############################################################################
 
 # Copyright 2021 Giovanni Squillero
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,9 @@
 
 __all__ = ['sg']
 
-from typing import Optional, Callable, Union
+from typing import Optional, Callable, Union, Any
+import sgx
+
 try:
     from tqdm import tqdm
 except:
@@ -54,6 +56,7 @@ TQDM_DEFAULT_OPTIONS = {
 
 def sg(species: species_.Species,
        max_generation: Optional[int] = None,
+       random_seed: Optional[Any] = None,
        progress_bar: Optional[Union[str, bool]] = True):
     """A vanilla optimizer
 
@@ -61,6 +64,8 @@ def sg(species: species_.Species,
     (DOI: 10.1109/ICEC.1998.700092)
     """
 
+    if random_seed is not None:
+        sgx.randy.seed(random_seed)
     tqdm_options = TQDM_DEFAULT_OPTIONS
     num_generation = 0
     archive = Archive()
